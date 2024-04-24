@@ -27,17 +27,17 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
+    <li class="nav-item {{ request()->routeIs('products*') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="{{ route('products.index') }}" data-toggle="collapse"
+            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-solid fa-tags"></i>
             <span>Product</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Management</h6>
-                <a class="collapse-item" href="buttons.html">Product List</a>
-                <a class="collapse-item" href="cards.html">Add Product</a>
+                <a class="collapse-item" href="{{ route('products.index') }}">Product List</a>
+                <a class="collapse-item" href="{{ route('products.create') }}">Add Product</a>
             </div>
         </div>
     </li>

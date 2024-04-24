@@ -1,10 +1,11 @@
 import "./jquery/jquery.min.js";
-import "./bootstrap/js/bootstrap.bundle.min.js";
+import "./bootstrap/js/bootstrap.bundle.js";
 import "./jquery-easing/jquery.easing.min.js";
 // Page Level Js
-import "./chart.js/Chart.min";
-import "./demo/chart-area-demo";
-import "./demo/chart-pie-demo.js";
+// import "./chart.js/Chart.min";
+// import "./demo/chart-area-demo";
+// import "./demo/chart-pie-demo.js";
+//Data table
 
 (function ($) {
     "use strict"; // Start of use strict
