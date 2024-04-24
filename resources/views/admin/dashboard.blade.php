@@ -123,7 +123,7 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="chart-area">
-                            <canvas id="myAreaChart"></canvas>
+                            <canvas id="book_count_chart" class=""></canvas>
                         </div>
                     </div>
                 </div>
@@ -172,4 +172,8 @@
         </div>
         <!-- Content Row -->
     </div>
+    {{-- <script type="module">
+        showBookCountChart({!! json_encode($categoryBookCount) !!});
+        showTransactionCountChart({!! json_encode($transactionCountsInLastSixMonth) !!});
+    </script> --}}
 @endsection

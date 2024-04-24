@@ -1,11 +1,10 @@
 import "./jquery/jquery.min.js";
 import "./bootstrap/js/bootstrap.bundle.js";
 import "./jquery-easing/jquery.easing.min.js";
+import DataTable from "datatables.net-bs4";
+// Chart Js
 // Page Level Js
-// import "./chart.js/Chart.min";
-// import "./demo/chart-area-demo";
-// import "./demo/chart-pie-demo.js";
-//Data table
+import Chart from "chart.js/auto";
 
 (function ($) {
     "use strict"; // Start of use strict
@@ -70,4 +69,6 @@ import "./jquery-easing/jquery.easing.min.js";
             );
         e.preventDefault();
     });
+
+    new DataTable("#dataTable");
 })(jQuery); // End of use strict
