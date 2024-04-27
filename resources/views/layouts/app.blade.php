@@ -87,7 +87,13 @@
                 </div>
             </div>
         </div>
+
     </div>
+    @if (session('message'))
+        <script type="module">
+            showToast("{{ Session::get('message') }}");
+        </script>
+    @endif
 </body>
 
 </html>

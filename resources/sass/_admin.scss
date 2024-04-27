@@ -1,4 +1,63 @@
+.app_logo {
+    height: 50px;
+}
 .img-1 {
     width: 30px;
     height: 30px;
+}
+
+.img_box {
+    width: 100px;
+    height: 100px;
+    position: relative;
+
+    .img_delete_btn {
+        background-color: #00000045;
+        border-radius: 100%;
+        color: #ffffff;
+        padding: 5px 10px;
+        text-decoration: none;
+        border: none !important;
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 5px;
+    }
+}
+
+.img_delete_btn:hover {
+    background-color: $danger;
+}
+
+.custom_photo_div {
+    position: relative;
+}
+
+.custom_photo_div img {
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover !important;
+}
+
+.custom_photo_div .photo_choose_icon {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #343434;
+    color: white;
+}
+
+.shop_item_container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-column-gap: 18px;
+    grid-row-gap: 18px;
 }

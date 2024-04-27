@@ -4,8 +4,10 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class=" d-flex align-items-center justify-content-between mb-2">
-            <h1 class="h3 text-gray-800">Products</h1>
-            <a href="{{ route('products.create') }}" class="btn btn-primary">Add Products</a>
+            <h1 class="h3 text-gray-800">Categories</h1>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#CategoryModal">
+                Add Category
+            </button>
         </div>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -31,15 +33,15 @@
                                     <td>1200</td>
                                     <td>
                                         <div class=" d-flex align-items-center gap-2">
-                                            <a href="{{ route('categories.edit', $category->slug) }}"
+                                            <a href="{{ route('categories.edit', $category->id) }}"
                                                 class="btn btn-sm btn-outline-dark">
-                                                <i class="fas fa-regular fa-trash-can"></i>
+                                                <i class="fas fa-pencil-alt"></i>
                                             </a>
                                             <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                                                 @csrf
                                                 @method('Delete')
                                                 <button type="submit" class="btn btn-sm btn-outline-dark">
-                                                    <i class="fas fa-regular fa-trash-can"></i>
+                                                    <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -48,6 +50,40 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Category Add Modal-->
+    <div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Category</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data"
+                        id="category_add_form">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="category_name" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="category_name" name="title"
+                                placeholder="Enter Category Title">
+                        </div>
+
+                        <div>
+                            <label for="cover_image" class="form-label">Cover Image</label>
+                            <input type="file" class="form-control" id="cover_image" name="image">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button form="category_add_form" type="submit" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>

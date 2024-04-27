@@ -1,10 +1,32 @@
+import "bootstrap";
 import "./jquery/jquery.min.js";
 import "./bootstrap/js/bootstrap.bundle.js";
 import "./jquery-easing/jquery.easing.min.js";
 import DataTable from "datatables.net-bs4";
+import "animate.css";
+
 // Chart Js
 // Page Level Js
 import Chart from "chart.js/auto";
+import Swal from "sweetalert2";
+
+window.showToast = function showToast(message) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-start",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        },
+    });
+    Toast.fire({
+        icon: "success",
+        title: message,
+    });
+};
 
 (function ($) {
     "use strict"; // Start of use strict

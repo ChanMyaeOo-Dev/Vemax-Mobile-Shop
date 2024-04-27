@@ -1,11 +1,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('/') }}">
+    <a class="sidebar-brand d-flex align-items-center" href="{{ route('/') }}">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <i class="fas fa-shipping-fast"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">VeMax Admin</div>
+        <div class="sidebar-brand-text mx-1">VeMax Admin</div>
     </a>
 
     <!-- Divider -->
@@ -45,17 +45,38 @@
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item {{ request()->routeIs('categories*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{ route('categories.index') }}" data-toggle="collapse"
-            data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+            data-target="#collapseCategory" aria-expanded="true" aria-controls="collapseCategory">
             <i class="fas fa-solid fa-layer-group"></i>
             <span>Category</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseCategory" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Management:</h6>
                 <a class="collapse-item" href="{{ route('categories.index') }}">Category List</a>
             </div>
         </div>
     </li>
+
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item {{ request()->routeIs('orders*') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="{{ route('categories.index') }}" data-toggle="collapse"
+            data-target="#collapseOrder" aria-expanded="true" aria-controls="collapseOrder">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Orders</span>
+        </a>
+        <div id="collapseOrder" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Customer Orders:</h6>
+                <a class="collapse-item" href="{{ route('orders.index') }}">
+                    New Orders
+                    <span class="badge rounded-pill text-bg-danger ms-3 text-white">99+</span>
+                </a>
+            </div>
+        </div>
+    </li>
+
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">

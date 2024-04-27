@@ -1,0 +1,6 @@
+.shop_item_container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-column-gap: 18px;
+    grid-row-gap: 18px;
+}
