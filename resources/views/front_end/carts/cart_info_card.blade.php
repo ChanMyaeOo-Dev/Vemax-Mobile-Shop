@@ -63,8 +63,8 @@
                          <form action="{{ route('carts.destroy', $cart->id) }}" method="POST">
                              @csrf
                              @method('DELETE')
-                             <button class="btn btn-light">
-                                 <i class="bi bi-x fw-bold fs-4"></i>
+                             <button class="btn btn-light text-black-50">
+                                 <i class="fas fa-times"></i>
                              </button>
                          </form>
 
@@ -177,7 +177,7 @@
                      updateDiv.classList.add("d-inline-flex");
                      loadingBtn.classList.remove("d-flex");
                      loadingBtn.classList.add("d-none");
-                     showToast("Updated.");
+                     showToast(response.data.message);
                      currentCartCount.innerText = response.data.newQty;
                      if (response.data.newQty == 0) {
                          window.location.reload();

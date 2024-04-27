@@ -110,7 +110,7 @@
                                             class="small">MMK</span></p>
                                 </a>
                                 @auth
-                                    <form class="addToCartForm" action="{{ route('carts.add') }}" method="POST">
+                                    <form class="addToCartForm" action="{{ route('carts.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <button id="cart_submit_btn{{ $product->id }}" type="submit"
@@ -159,7 +159,7 @@
                                 submitBtn.classList.remove("d-none");
                                 loadingBtn.classList.remove("d-flex");
                                 loadingBtn.classList.add("d-none");
-                                showToast("Added to cart."); // updateCartCount
+                                showToast(response.data.message); // updateCartCount
                                 var cartCountSpan = document.getElementById(
                                     'cartCount');
                                 var cartCountBtn = document.getElementById(

@@ -25,8 +25,4 @@ Route::middleware(["auth"])->prefix("admin")->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource("users", UserController::class);
     Route::resource("carts", CartController::class);
-    Route::post('/carts/add', [CartController::class, "addItem"])->name('carts.add');
-    Route::prefix('carts')->group(function () {
-        Route::put('/{id}', [CartController::class, 'update'])->name('carts.update');
-    });
 });
