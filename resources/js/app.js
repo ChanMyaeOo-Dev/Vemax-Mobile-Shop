@@ -4,8 +4,6 @@ import "./bootstrap/js/bootstrap.bundle.js";
 import "./jquery-easing/jquery.easing.min.js";
 import DataTable from "datatables.net-bs4";
 import "animate.css";
-
-// Chart Js
 // Page Level Js
 import Chart from "chart.js/auto";
 import Swal from "sweetalert2";
