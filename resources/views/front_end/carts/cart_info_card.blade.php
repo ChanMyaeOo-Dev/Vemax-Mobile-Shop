@@ -137,7 +137,7 @@
 
                  <form id="orderUploadForm" action="{{ route('orders.store') }}" method="POST">
                      @csrf
-                     <input form="orderUploadForm" type="hidden" name="total_amount" value="{{ $totalCost }}">
+                     <input type="hidden" name="total_amount" value="{{ $totalCost }}">
                  </form>
                  <button form="orderUploadForm" class="w-100 btn btn-dark py-2">
                      PROCEED TO CHECKOUT

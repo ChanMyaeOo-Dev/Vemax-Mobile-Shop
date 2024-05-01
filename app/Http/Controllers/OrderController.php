@@ -4,39 +4,67 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Cart;
+use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreOrderRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreOrderRequest $request)
     {
-        //
+        // Upload Customer
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->phone = $request->phone;
+        $customer->address = $request->address;
+        $customer->save();
+
+        // Upload Order
+        $order = new Order();
+        $total_amount = $request->total_amount;
+        $order->total_amount = $total_amount;
+        $order->customer_id = $customer->id;
+        $order->save();
+
+        $userCarts = Cart::where("user_id", Auth::id())->get();
+        if (count($userCarts) <= 0) {
+            return redirect()->back();
+        }
+        $allProducts = [];
+        $orderProducts = [];
+
+        foreach ($userCarts as $cart) {
+            $allProducts[] = ["qty" => $cart->qty, "product_id" => $cart->product->id];
+            $orderProducts[] = ["qty" => $cart->qty, "product" => $cart->product];
+        }
+
+        foreach ($allProducts as $product) {
+            $orderItem = new OrderDetail();
+            $orderItem->order_id = $order->id;
+            $orderItem->product_id = $product["product_id"];
+            $orderItem->qty = $product['qty'];
+            $orderItem->price = Product::findOrFail($product["product_id"])->price;
+            $orderItem->save();
+        }
+
+        // Clear Cart
+        Cart::where("user_id", Auth::id())->orderBy("id", "desc")->delete();
+
+        return view('front_end.order.receipt', compact("customer", "orderProducts", "total_amount"));
     }
 
     /**
