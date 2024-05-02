@@ -23,10 +23,13 @@
             </ul>
 
             <div class="d-flex align-items-center">
-                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
-                    data-bs-target="#searchModal">
-                    <i class="fas fa-search"></i>
-                </button>
+                <form action="{{ route('search') }}" method="GET">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-search me-1"></i>
+                        <input type="text" name="search" class="search_input form-control border-0"
+                            placeholder="Search here..." value="{{ isset($search) ? $search : '' }}">
+                    </div>
+                </form>
             </div>
 
             <!-- Right Side Of Navbar -->

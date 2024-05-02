@@ -15,7 +15,7 @@
                                 <div class="mb-auto">
                                     @foreach ($get_6_products as $product)
                                         <div class="mb-3 pb-3 border-bottom">
-                                            <a href="{{ route('/', $product->id) }}"
+                                            <a href="{{ route('detail', $product->slug) }}"
                                                 class="text-secondary text-decoration-none">
                                                 <div class="d-flex align-items-center">
                                                     <img src="{{ asset('storage/' . $product->featured_image) }}"
@@ -29,7 +29,7 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <a href="#" class="btn btn-primary w-100">See All</a>
+                                <a href="{{ route('shop') }}" class="btn btn-primary w-100">See All</a>
                             </div>
                         </div>
                     </div>
@@ -96,12 +96,12 @@
                         <p class="text-primary fw-bold fs-5 mb-0 me-auto">
                             <i class="bi bi-shop me-2"></i> Just for you
                         </p>
-                        <a href="#" class="btn btn-primary px-4">See All</a>
+                        <a href="{{ route('shop') }}" class="btn btn-primary px-4">See All</a>
                     </div>
                     <div class="shop_item_container">
                         @foreach ($get_12_products as $product)
                             <div class="d-flex flex-column h-100 bg-white border border-1 rounded p-3">
-                                <a href="{{ route('/', $product->id) }}"
+                                <a href="{{ route('detail', $product->slug) }}"
                                     class="text-secondary text-decoration-none w-100 mb-auto">
                                     <img src="{{ asset('storage/' . $product->featured_image) }}" height="150px"
                                         class="rounded bg-white w-100 object-fit-cover mb-3">

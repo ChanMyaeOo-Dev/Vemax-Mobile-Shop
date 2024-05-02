@@ -4,3 +4,11 @@
     grid-column-gap: 18px;
     grid-row-gap: 18px;
 }
+.shop_detail_image {
+    width: 300px;
+    height: 300px;
+}
+
+.search_input:focus {
+    box-shadow: none !important;
+}

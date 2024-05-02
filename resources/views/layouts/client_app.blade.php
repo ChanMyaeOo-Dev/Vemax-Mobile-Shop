@@ -14,6 +14,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('addToCartScript')
     @stack('editCart')
+    @stack('updateQty')
 </head>
 
 <body>

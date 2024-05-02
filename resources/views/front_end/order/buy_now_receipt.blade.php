@@ -51,23 +51,21 @@
                     </div>
 
                     <p class="mb-3 text-dark fw-bold fs-5 ps-2">Order Details</p>
-                    @foreach ($orderProducts as $product)
-                        <div class="card border-0 border-bottom mb-3">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ asset('storage/' . $product['product']->featured_image) }}" height="50px"
-                                        width="50px" class=" object-fit-cover rounded shadow me-3">
-                                    <p class="mb-0 text-dark fs-5 me-auto">
-                                        {{ $product['product']->title . ' x ' . $product['qty'] }}
-                                    </p>
-                                    <p class="mb-0 text-dark fw-bold fs-5">
-                                        {{ $product['product']->price * $product['qty'] }}
-                                        Kyats
-                                    </p>
-                                </div>
+                    <div class="card border-0 border-bottom mb-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('storage/' . $product->featured_image) }}" height="50px" width="50px"
+                                    class=" object-fit-cover rounded shadow me-3">
+                                <p class="mb-0 text-dark fs-5 me-auto">
+                                    {{ $product->title . ' x ' . $qty }}
+                                </p>
+                                <p class="mb-0 text-dark fw-bold fs-5">
+                                    {{ $product->price * $qty }}
+                                    Kyats
+                                </p>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                     <div
                         class="d-flex align-items-center justify-content-between mt-4 mb-4 px-3 py-3 border-bottom border-top">
                         <p class="mb-0 fw-bold fs-4 text-dark">Total</p>

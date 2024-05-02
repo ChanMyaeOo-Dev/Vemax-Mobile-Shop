@@ -7,12 +7,21 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
+
+Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+
+Route::get("/shop/{slug}", [HomeController::class, "detail"])->name("detail");
+Route::get("/buy-now/{slug}", [HomeController::class, "buyNow"])->name("buy-now");
+
+Route::post('/buyNowOrderUpload', [OrderController::class, "buyNowOrderUpload"])->name("buyNowOrderUpload");
 
 // Admin Routes
 Route::middleware(["auth"])->prefix("admin")->group(function () {

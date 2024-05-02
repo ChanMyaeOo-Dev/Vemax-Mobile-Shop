@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("title");
             $table->string("slug");
             $table->longText("description");
-            $table->string("price");
+            $table->integer("price");
             $table->string("discounted_price")->default(0);
             $table->string("featured_image");
             $table->string("stock");
