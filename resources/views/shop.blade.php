@@ -9,14 +9,14 @@
                 <div class="d-flex align-items-center gap-2 mb-3">
                     <div class="filter_lists d-flex align-items-center gap-2">
                         @if (isset($search))
-                            <button class="btn btn-light shadow">
+                            <a href="{{ route('shop') }}" class="btn btn-light shadow">
                                 Search: {{ $search }}
                                 <i class="fas fa-xs fa-times text-black-50 ms-1"></i>
-                            </button>
+                            </a>
                         @else
-                            <button class="btn btn-light shadow">
+                            <a href="{{ route('shop') }}" class="btn btn-light shadow">
                                 All Products
-                            </button>
+                            </a>
                         @endif
                     </div>
                     <div class="dropdown">
@@ -29,13 +29,16 @@
                             @elseif (request()->sort_by == 'price_high_to_low')
                                 Sort By : Price high to low
                             @endif
-
                         </button>
                         <ul class="dropdown-menu">
                             <li>
                                 <form action="{{ route('search') }}" method="GET">
                                     @isset($search)
                                         <input type="hidden" name="search" value="{{ $search }}">
+                                    @endisset
+
+                                    @isset($category)
+                                        <input type="hidden" name="category" value="{{ $category }}">
                                     @endisset
                                     <input type="hidden" name="sort_by" value="best_match">
                                     <button type="submit" class="dropdown-item" href="{{ route('search') }}">
@@ -49,6 +52,10 @@
                                     @isset($search)
                                         <input type="hidden" name="search" value="{{ $search }}">
                                     @endisset
+
+                                    @isset($category)
+                                        <input type="hidden" name="category" value="{{ $category }}">
+                                    @endisset
                                     <input type="hidden" name="sort_by" value="price_low_to_high">
                                     <button type="submit" class="dropdown-item" href="{{ route('search') }}">
                                         Price low to high
@@ -61,6 +68,11 @@
                                     @isset($search)
                                         <input type="hidden" name="search" value="{{ $search }}">
                                     @endisset
+
+                                    @isset($category)
+                                        <input type="hidden" name="category" value="{{ $category }}">
+                                    @endisset
+
                                     <input type="hidden" name="sort_by" value="price_high_to_low">
                                     <button type="submit" class="dropdown-item" href="{{ route('search') }}">
                                         Price high to low
@@ -70,6 +82,52 @@
 
                         </ul>
                     </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-light shadow dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            @isset($category)
+                                Filter By : {{ $category_title }}
+                            @else
+                                Filter
+                            @endisset
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form action="{{ route('search') }}" method="GET">
+                                    @isset($search)
+                                        <input type="hidden" name="search" value="{{ $search }}">
+                                    @endisset
+
+                                    @isset($sortBy)
+                                        <input type="hidden" name="sort_by" value="{{ $sortBy }}">
+                                    @endisset
+                                    <button type="submit" class="dropdown-item">
+                                        All Category
+                                    </button>
+                                </form>
+                            </li>
+                            @foreach ($categories as $category)
+                                <li>
+                                    <form action="{{ route('search') }}" method="GET">
+                                        @isset($search)
+                                            <input type="hidden" name="search" value="{{ $search }}">
+                                        @endisset
+
+                                        @isset($sortBy)
+                                            <input type="hidden" name="sort_by" value="{{ $sortBy }}">
+                                        @endisset
+
+                                        <input type="hidden" name="category" value="{{ $category->id }}">
+                                        <button type="submit" class="dropdown-item" href="{{ route('shop') }}">
+                                            {{ $category->title }}
+                                        </button>
+                                    </form>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
 
                 </div>
 

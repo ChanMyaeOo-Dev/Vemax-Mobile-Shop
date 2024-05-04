@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Cart;
-use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -17,7 +16,56 @@ class OrderController extends Controller
 
     public function index()
     {
-        //
+        $orders = Order::where("status", "pending")->with(['customer', 'orderDetails'])
+            ->get();
+
+        $customer_orders = [];
+
+        foreach ($orders as $order) {
+            $id = $order->id;
+            $customerName = $order->customer->name;
+            $customerProfileImage = $order->customer->profile_image;
+            $productCount = $order->orderDetails->count();
+            $order_status = $order->status;
+            $response = [
+                'id' => $id,
+                'customer_name' => $customerName,
+                'customer_profile_image' => $customerProfileImage,
+                'product_count' => $productCount,
+                'order_status' => $order_status,
+            ];
+
+            $customer_orders[] = $response;
+        }
+
+        return view('admin.order.index', compact("customer_orders"));
+    }
+
+    public function orderHistory()
+    {
+        $orders = Order::where("status", "delivered")->with(['customer', 'orderDetails'])
+            ->get();
+
+        $customer_orders = [];
+
+        foreach ($orders as $order) {
+            $id = $order->id;
+            $customerName = $order->customer->name;
+            $customerProfileImage = $order->customer->user->profile_image;
+            $productCount = $order->orderDetails->count();
+            $order_status = $order->status;
+            $response = [
+                'id' => $id,
+                'customer_name' => $customerName,
+                'customer_profile_image' => $customerProfileImage,
+                'product_count' => $productCount,
+                'order_status' => $order_status,
+            ];
+
+            $customer_orders[] = $response;
+        }
+
+        return view('admin.order.index', compact("customer_orders"));
     }
 
     public function create()
@@ -27,18 +75,11 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
-        // Upload Customer
-        $customer = new Customer();
-        $customer->name = $request->name;
-        $customer->phone = $request->phone;
-        $customer->address = $request->address;
-        $customer->save();
-
         // Upload Order
         $order = new Order();
         $total_amount = $request->total_amount;
         $order->total_amount = $total_amount;
-        $order->customer_id = $customer->id;
+        $order->customer_id = Auth::id();
         $order->save();
 
         $userCarts = Cart::where("user_id", Auth::id())->get();
@@ -59,24 +100,23 @@ class OrderController extends Controller
             $orderItem->product_id = $product["product_id"];
             $orderItem->qty = $product['qty'];
             $orderItem->price = Product::findOrFail($product["product_id"])->price;
+            $orderItem->user_id = Auth::id();
+            $orderItem->name = $request->name;
+            $orderItem->phone = $request->phone;
+            $orderItem->address = $request->address;
             $orderItem->save();
         }
 
         // Clear Cart
         Cart::where("user_id", Auth::id())->orderBy("id", "desc")->delete();
 
-        return view('front_end.order.receipt', compact("customer", "orderProducts", "total_amount"));
+        return view('front_end.order.receipt', compact("orderItem", "orderProducts", "total_amount"));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
     public function show(Order $order)
     {
-        //
+        $products = OrderDetail::where("order_id", "=", $order->id)->get();
+        return view('admin.order.show', compact('order', 'products'));
     }
 
     /**
@@ -89,17 +129,11 @@ class OrderController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateOrderRequest  $request
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $order->status = $request->status;
+        $order->update();
+        return redirect()->back()->with("message", "Status updated.");
     }
 
     /**
@@ -121,18 +155,12 @@ class OrderController extends Controller
             "address" => "required",
         ]);
         $product = Product::findOrFail($request->product_id);
-        // Upload Customer
-        $customer = new Customer();
-        $customer->name = $request->name;
-        $customer->phone = $request->phone;
-        $customer->address = $request->address;
-        $customer->save();
 
         // Upload Order
         $order = new Order();
         $total_amount = $request->total_amount;
         $order->total_amount = $total_amount;
-        $order->customer_id = $customer->id;
+        $order->customer_id = Auth::id();
         $order->save();
 
         // Upload Order Item
@@ -142,8 +170,12 @@ class OrderController extends Controller
         $qty = $request->qty;
         $orderItem->qty = $qty;
         $orderItem->price = $product->price;
+        $orderItem->user_id = Auth::id();
+        $orderItem->name = $request->name;
+        $orderItem->phone = $request->phone;
+        $orderItem->address = $request->address;
         $orderItem->save();
 
-        return view('front_end.order.buy_now_receipt', compact("customer", "product", "qty", "total_amount"));
+        return view('front_end.order.buy_now_receipt', compact("orderItem", "product", "qty", "total_amount"));
     }
 }

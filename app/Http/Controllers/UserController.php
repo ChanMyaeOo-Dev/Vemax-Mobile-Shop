@@ -2,26 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        $orders = Order::where("customer_id", $user->id)->with('orderDetails')
+            ->get();
+        $customer_orders = [];
+        $delivered_orders = [];
+
+        foreach ($orders as $order) {
+            foreach ($order->orderDetails as $product) {
+
+                if ($order->status == "pending") {
+                    $customer_orders[] = [
+                        "order_id" => $product->order_id,
+                        "product_image" => $product->product->featured_image,
+                        "product_title" => $product->product->title,
+                        "product_price" => $product->product->price,
+                        "qty" => $product->qty,
+                        "cost" => $product->product->price * $product->qty,
+                    ];
+                } else {
+                    $delivered_orders[] = [
+                        "order_id" => $product->order_id,
+                        "product_image" => $product->product->featured_image,
+                        "product_title" => $product->product->title,
+                        "product_price" => $product->product->price,
+                        "qty" => $product->qty,
+                        "cost" => $product->product->price * $product->qty,
+                    ];
+                }
+            }
+        }
+
+        //Get Delivered Orders
+
+        return view('front_end.profile', compact("user", "customer_orders", "delivered_orders"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function orderDetail($id)
+    {
+        // $order = Order::findOrFail($id);
+        $orders = OrderDetail::where("order_id", $id)->get();
+        return view('front_end.order.order_detail', compact('orders'));
+    }
     public function create()
     {
         //

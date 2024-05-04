@@ -55,16 +55,9 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with("message", "Successfully Added new Product.");
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function show(Product $product)
     {
-        //
+        return view('admin.products.show', compact('product'));
     }
 
     public function edit(Product $product)

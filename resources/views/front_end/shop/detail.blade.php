@@ -13,7 +13,11 @@
                         <p class="mb-1 text-black">Description</p>
                         <p class="mb-3">{{ $product->description }}</p>
                         <p class="bg-warning text-dark shadow-sm rounded fs-6 px-2 py-1 d-inline">
-                            {{ $product->category->title }}
+                            @isset($product->category->title)
+                                {{ $product->category->title }}
+                            @else
+                                <span class="small">UNCATEGORIZE</span>
+                            @endisset
                         </p>
                         <p class="mb-3 mt-4 text-black fw-bold fs-5">{{ $product->price . ' MMK' }}</p>
 
@@ -23,7 +27,7 @@
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <button id="cart_submit_btn{{ $product->id }}" type="submit"
-                                        class="btn btn-primary w-100">Add to
+                                        class="btn btn-outline-primary w-100">Add to
                                         Cart</button>
                                     <button id="loading_btn{{ $product->id }}"
                                         class="btn btn-light w-100 d-none align-items-center justify-content-center gap-1"
@@ -33,7 +37,7 @@
                                     </button>
                                 </form>
                             @else
-                                <a href="{{ route('login') }}" class="w-100 btn btn-outline-primary mt-3">Add to cart</a>
+                                <a href="{{ route('login') }}" class="btn btn-outline-primary">Add to cart</a>
                             @endauth
                             <a href="{{ route('buy-now', $product->slug) }}" class="btn btn-outline-dark">Buy Now</a>
                         </div>

@@ -72,6 +72,10 @@
                     New Orders
                     <span class="badge rounded-pill text-bg-danger ms-3 text-white">99+</span>
                 </a>
+                <a class="collapse-item" href="{{ route('order-history') }}">
+                    Sent Orders
+                    <span class="badge rounded-pill text-bg-danger ms-3 text-white">99+</span>
+                </a>
             </div>
         </div>
     </li>

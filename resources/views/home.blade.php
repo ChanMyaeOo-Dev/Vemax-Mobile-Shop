@@ -75,14 +75,17 @@
                         </div>
                         <div class="d-flex align-items-center justify-content-between gap-3">
                             @foreach ($get_6_categories as $category)
-                                <a href="#"
-                                    class="text-secondary text-decoration-none p-3 w-100 bg-white border border-1 rounded">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="{{ asset('storage/' . $category->image) }}" width="50px" height="50px"
-                                            class="rounded bg-white shadow p-2 me-3">
-                                        <p class="mb-0 text-secondary me-auto">{{ $category->title }}</p>
-                                    </div>
-                                </a>
+                                <form action="{{ route('search') }}" method="GET" class="w-100">
+                                    <input type="hidden" name="category" value="{{ $category->id }}">
+                                    <button
+                                        class="text-secondary text-decoration-none p-3 w-100 bg-white border border-1 rounded">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <img src="{{ asset('storage/' . $category->image) }}" width="50px"
+                                                height="50px" class="rounded bg-white shadow p-2 me-3">
+                                            <p class="mb-0 text-secondary me-auto">{{ $category->title }}</p>
+                                        </div>
+                                    </button>
+                                </form>
                             @endforeach
                         </div>
                     </div>

@@ -39,31 +39,39 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
+        $categories = Category::all();
+
         $search = $request->search;
+        $category = $request->category;
+        $category_title = "";
+        $sortBy = $request->sort_by;
 
         $query = Product::query();
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
-            $query->where('title', 'like', "%$searchTerm%");
-        }
-        if ($request->has('sort_by') && $request->input('sort_by') == 'best_match') {
-            $query->orderBy('id', "desc");
-        }
 
-        if ($request->has('sort_by') && $request->input('sort_by') == 'price_low_to_high') {
+        if ($search) {
+            $query->where('title', 'like', "%$search%");
+        }
+        // Apply sorting
+        if ($sortBy == 'best_match') {
+            // Default sorting (latest)
+            $query->orderBy('id', 'desc');
+        } elseif ($sortBy == 'price_low_to_high') {
+            // Sort by price low to high
             $query->orderBy('price', 'asc');
-        }
-
-        if ($request->has('sort_by') && $request->input('sort_by') == 'price_high_to_low') {
+        } elseif ($sortBy == 'price_high_to_low') {
+            // Sort by price high to low
             $query->orderBy('price', 'desc');
+        }
+        // Filter by category
+        if ($category) {
+            $query->where('category_id', $category);
+            $category_title = Category::findOrFail($category)->title;
         }
 
         $products = $query->paginate(24);
-        $products->appends(['search' => $request->input('search')]);
-        $products->appends(['sort_by' => $request->input('sort_by')]);
+        $products->appends(['search' => $search, 'sort_by' => $sortBy, 'category' => $category]);
 
-
-        return view('shop', compact('products',  "search"));
+        return view('shop', compact('categories', 'category', 'category_title', 'products',  "search", 'sortBy'));
     }
 
     public function detail($slug)

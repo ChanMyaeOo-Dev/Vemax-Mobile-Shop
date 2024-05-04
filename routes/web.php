@@ -7,7 +7,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,9 +28,12 @@ Route::middleware(["auth"])->prefix("admin")->group(function () {
     Route::resource("categories", CategoryController::class);
     Route::resource("photos", PhotoController::class);
     Route::resource("orders", OrderController::class);
+
+    Route::get('/order-history', [OrderController::class, "orderHistory"])->name('order-history');
 });
 //Auth Routes
 Route::middleware(['auth'])->group(function () {
     Route::resource("users", UserController::class);
     Route::resource("carts", CartController::class);
+    Route::get("order-detail/{id}", [UserController::class, "orderDetail"])->name("order-detail");
 });

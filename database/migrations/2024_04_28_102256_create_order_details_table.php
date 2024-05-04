@@ -19,6 +19,10 @@ return new class extends Migration
             $table->foreignId("product_id");
             $table->string("qty");
             $table->string("price");
+            $table->foreignId("user_id");
+            $table->string("name");
+            $table->string("phone");
+            $table->longText("address");
             $table->timestamps();
         });
     }

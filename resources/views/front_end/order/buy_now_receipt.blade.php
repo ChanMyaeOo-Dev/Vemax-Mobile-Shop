@@ -34,17 +34,17 @@
 
                             <p class="mb-2 text-secondary">
                                 <i class="fas fa-user me-2"></i>
-                                {{ $customer->name }}
+                                {{ $orderItem->name }}
                             </p>
 
                             <p class="mb-2 text-secondary">
                                 <i class="fas fa-phone-alt me-2"></i>
-                                {{ $customer->phone }}
+                                {{ $orderItem->phone }}
                             </p>
 
                             <p class="mb-0 text-secondary">
                                 <i class="fas fa-map-marked-alt me-2"></i>
-                                {{ $customer->address }}
+                                {{ $orderItem->address }}
                             </p>
 
                         </div>
