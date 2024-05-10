@@ -51,7 +51,7 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             $id = $order->id;
             $customerName = $order->customer->name;
-            $customerProfileImage = $order->customer->user->profile_image;
+            $customerProfileImage = $order->customer->profile_image;
             $productCount = $order->orderDetails->count();
             $order_status = $order->status;
             $response = [
@@ -95,21 +95,25 @@ class OrderController extends Controller
         }
 
         foreach ($allProducts as $product) {
+            $order_product = Product::findOrFail($product["product_id"]);
             $orderItem = new OrderDetail();
             $orderItem->order_id = $order->id;
             $orderItem->product_id = $product["product_id"];
             $orderItem->qty = $product['qty'];
-            $orderItem->price = Product::findOrFail($product["product_id"])->price;
+            $orderItem->price = $order_product->price;
             $orderItem->user_id = Auth::id();
             $orderItem->name = $request->name;
             $orderItem->phone = $request->phone;
             $orderItem->address = $request->address;
             $orderItem->save();
+
+            $currentProductStock = $order_product->stock;
+            $order_product->stock = $currentProductStock - $product['qty'];
+            $order_product->update();
         }
 
         // Clear Cart
         Cart::where("user_id", Auth::id())->orderBy("id", "desc")->delete();
-
         return view('front_end.order.receipt', compact("orderItem", "orderProducts", "total_amount"));
     }
 
@@ -133,6 +137,7 @@ class OrderController extends Controller
     {
         $order->status = $request->status;
         $order->update();
+
         return redirect()->back()->with("message", "Status updated.");
     }
 

@@ -29,14 +29,28 @@
                                             <td>Name</td>
                                             <td>PHONE</td>
                                             <td>ADDRESS</td>
+                                            <td>Type</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>{{ $order->customer->name }}</td>
                                             <td>{{ $order->customer->phone }}</td>
-                                            <td>{{ $order->customer->address }}</td>
+                                            <td>{{ '-' }}</td>
+                                            <td>
+                                                <span class="badge text-bg-secondary text-white">Registration</span>
+                                            </td>
                                         </tr>
+
+                                        <tr>
+                                            <td>{{ $products[0]->name }}</td>
+                                            <td>{{ $products[0]->phone }}</td>
+                                            <td>{{ $products[0]->address }}</td>
+                                            <td>
+                                                <span class="badge text-bg-primary text-white">Shipping Information</span>
+                                            </td>
+                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>

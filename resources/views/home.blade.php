@@ -7,7 +7,7 @@
                 {{-- Banner Card --}}
                 <div class="row mb-4">
                     <div class="col-md-3">
-                        <div class="card border-0 shadow bg-white h-100">
+                        <div class="card bg-white h-100">
                             <div class="card-body d-flex flex-column">
                                 <p class="text-primary fw-bold fs-5 mb-3 pb-3 border-bottom">
                                     <i class="bi bi-fire me-2"></i> Popular Items
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <div class="card border-0 bg-white shadow">
+                        <div class="card bg-white">
                             <div id="carouselExample" class="carousel slide">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -66,7 +66,7 @@
                 </div>
 
                 {{-- Category Card --}}
-                <div class="card border-0 shadow bg-white mb-4">
+                <div class="card bg-white mb-4">
                     <div class="card-body d-flex flex-column">
                         <div class="d-flex align-items-baseline mb-3 pb-3 border-bottom">
                             <p class="text-primary fw-bold fs-5 mb-0 me-auto">
@@ -77,11 +77,10 @@
                             @foreach ($get_6_categories as $category)
                                 <form action="{{ route('search') }}" method="GET" class="w-100">
                                     <input type="hidden" name="category" value="{{ $category->id }}">
-                                    <button
-                                        class="text-secondary text-decoration-none p-3 w-100 bg-white border border-1 rounded">
+                                    <button class="text-secondary text-decoration-none p-3 w-100 bg-white border-0">
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <img src="{{ asset('storage/' . $category->image) }}" width="50px"
-                                                height="50px" class="rounded bg-white shadow p-2 me-3">
+                                            <img src="{{ asset('storage/' . $category->image) }}" width="90px"
+                                                height="90px" class="rounded me-3">
                                             <p class="mb-0 text-secondary me-auto">{{ $category->title }}</p>
                                         </div>
                                     </button>
@@ -93,7 +92,7 @@
             </div>
 
             {{-- Main Card --}}
-            <div class="card border-0 shadow bg-white mb-4">
+            <div class="card bg-white mb-4">
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex align-items-baseline mb-3 pb-3 border-bottom">
                         <p class="text-primary fw-bold fs-5 mb-0 me-auto">
@@ -103,13 +102,13 @@
                     </div>
                     <div class="shop_item_container">
                         @foreach ($get_12_products as $product)
-                            <div class="d-flex flex-column h-100 bg-white border border-1 rounded p-3">
+                            <div class="product_card d-flex flex-column h-100 p-2">
                                 <a href="{{ route('detail', $product->slug) }}"
                                     class="text-secondary text-decoration-none w-100 mb-auto">
-                                    <img src="{{ asset('storage/' . $product->featured_image) }}" height="150px"
-                                        class="rounded bg-white w-100 object-fit-cover mb-3">
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}" height="180px"
+                                        class="product_image rounded bg-white w-100 object-fit-cover mb-3">
                                     <p class="mb-0 text-center text-secondary">{{ $product->title }}</p>
-                                    <p class="mb-auto text-center text-primary">{{ $product->price }} <span
+                                    <p class="mb-auto text-center text-dark">{{ $product->price }} <span
                                             class="small">MMK</span></p>
                                 </a>
                                 @auth
@@ -117,10 +116,11 @@
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <button id="cart_submit_btn{{ $product->id }}" type="submit"
-                                            class="btn btn-light w-100 mt-3">Add to
-                                            Cart</button>
+                                            class="cart_submit_btn rounded-0 btn btn-light shadow w-100 mt-3">
+                                            <i class="fas fa-cart-plus text-secondary me-1"></i>
+                                            Add to Cart</button>
                                         <button id="loading_btn{{ $product->id }}"
-                                            class="btn btn-light w-100 mt-3 d-none align-items-center justify-content-center gap-1"
+                                            class=" rounded-0 btn btn-light shadow w-100 mt-3 d-none align-items-center justify-content-center gap-1"
                                             type="button" disabled>
                                             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                                             <span role="status">Loading...</span>

@@ -16,42 +16,111 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $images = [
-            "img_1.jpg",
-            "img_2.jpg",
-            "img_3.jpg",
-            "img_4.jpg",
-            "img_5.jpg",
-            "img_6.jpg",
-            "img_7.jpg",
-            "img_8.jpg",
-            "img_9.jpg",
-        ];
         $description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum porro facilis qui blanditiis delectus, deleniti adipisci recusandae repellendus rerum perspiciatis sit illum. Distinctio incidunt voluptas id neque mollitia illo consequuntur.";
 
-        $products = [
-            "Product_1",
-            "Product_2",
-            "Product_3",
-            "Product_4",
-            "Product_5",
-            "Product_6",
-            "Product_7",
-            "Product_8",
-            "Product_9",
+        $watches = [
+            "Smart Watch 1",
+            "Smart Watch 2",
+            "Smart Watch 3",
+            "Smart Watch 4",
+            "Smart Watch 5",
         ];
-
-        foreach ($images as $key => $image) {
+        $watch_images = [
+            "product_watch_1.jpg",
+            "product_watch_2.jpg",
+            "product_watch_3.jpg",
+            "product_watch_4.jpg",
+            "product_watch_5.jpg",
+        ];
+        foreach ($watches as $key => $watch) {
             Product::factory()->create([
-                'title' => $products[$key],
-                'slug' => Str::slug($products[$key]),
+                'title' => $watch,
+                'slug' => Str::slug($watch),
                 'description' => $description,
-                'price' => rand(5000, 135000),
-                'featured_image' => $image,
-                'category_id' => Category::inRandomOrder()->first()->id,
+                'price' => rand(5000, 1350) . "00",
+                'featured_image' => $watch_images[$key],
+                'category_id' => 1,
                 'stock' => 10,
             ],);
         }
+
+        //Covers
+
+        $covers = [
+            "Cover 1",
+            "Cover 2",
+            "Cover 3",
+        ];
+        $cover_images = [
+            "product_cover_1.jpg",
+            "product_cover_2.jpg",
+            "product_cover_3.jpg",
+        ];
+        foreach ($covers as $key => $cover) {
+            Product::factory()->create([
+                'title' => $cover,
+                'slug' => Str::slug($cover),
+                'description' => $description,
+                'price' => rand(5000, 1350) . "00",
+                'featured_image' => $cover_images[$key],
+                'category_id' => 2,
+                'stock' => 10,
+            ],);
+        }
+        //Power Banks
+
+        $power_banks = [
+            "Power Bank 1",
+            "Power Bank 2",
+            "Power Bank 3",
+            "Power Bank 4",
+            "Power Bank 5",
+        ];
+        $power_bank_images = [
+            "product_powerbank_1.jpg",
+            "product_powerbank_2.jpg",
+            "product_powerbank_3.jpg",
+            "product_powerbank_4.jpg",
+            "product_powerbank_5.jpg",
+        ];
+        foreach ($power_banks as $key => $power_bank) {
+            Product::factory()->create([
+                'title' => $power_bank,
+                'slug' => Str::slug($power_bank),
+                'description' => $description,
+                'price' => rand(5000, 1350) . "00",
+                'featured_image' => $power_bank_images[$key],
+                'category_id' => 3,
+                'stock' => 10,
+            ],);
+        }
+
+        //Earphones
+
+        $ear_phones = [
+            "Ear Phone 1",
+            "Ear Phone 2",
+            "Ear Phone 3",
+            "Ear Phone 4",
+        ];
+        $ear_phone_images = [
+            "product_earphone_1.jpg",
+            "product_earphone_2.jpg",
+            "product_earphone_3.jpg",
+            "product_earphone_4.jpg",
+        ];
+        foreach ($ear_phones as $key => $ear_phone) {
+            Product::factory()->create([
+                'title' => $ear_phone,
+                'slug' => Str::slug($ear_phone),
+                'description' => $description,
+                'price' => rand(5000, 1350) . "00",
+                'featured_image' => $ear_phone_images[$key],
+                'category_id' => 4,
+                'stock' => 10,
+            ],);
+        }
+
         Product::factory(100)->create();
     }
 }

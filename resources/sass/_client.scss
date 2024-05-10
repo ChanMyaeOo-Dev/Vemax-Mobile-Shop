@@ -16,3 +16,20 @@
 .search_input:focus {
     box-shadow: none !important;
 }
+
+.product_image {
+    transition: 0.3s;
+}
+.cart_submit_btn {
+    transition: 0.3s;
+}
+
+.product_card:hover {
+    .product_image {
+        transform: translateY(-10px) !important;
+    }
+
+    .cart_submit_btn {
+        border: 1px solid #00000020;
+    }
+}

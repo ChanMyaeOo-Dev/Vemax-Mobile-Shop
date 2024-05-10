@@ -15,12 +15,12 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = ["cables", "cases", "chargers", "powerbanks"];
+        $categories = ["Smart watches", "Phone Covers", "Power Banks", "Earphones"];
         $category_images = [
-            "category_cable.jpg",
-            "category_case.jpg",
-            "category_charger.jpg",
+            "category_watch.jpg",
+            "category_phone_case.jpg",
             "category_powerbank.jpg",
+            "category_earphone.jpg",
         ];
         foreach ($categories as $key => $category) {
             Category::factory()->create([

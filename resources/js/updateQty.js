@@ -1,3 +1,4 @@
+var currentProductStock = document.getElementById("currentProductStock");
 var price = document.getElementById("price");
 var totalAmount = document.getElementById("total_amount");
 var totalAmountShow = document.getElementById("totalAmountShow");
@@ -6,18 +7,23 @@ var currentQty = document.getElementById("currentQty");
 
 window.qtyAdd = function qtyAdd() {
     var newQty = parseInt(currentQty.innerText) + 1;
-    currentQty.innerText = newQty;
-    var total = newQty * price.value + " Kyats";
-    totalAmountShow.innerText = total;
-    totalAmount.value = total;
-    qtyInput.value = newQty;
+
+    if (currentProductStock.value >= newQty) {
+        currentQty.innerText = newQty;
+        var total = newQty * price.value + " Kyats";
+        totalAmountShow.innerText = total;
+        totalAmount.value = total;
+        qtyInput.value = newQty;
+    }
 };
 
 window.qtyMinus = function qtyMinus() {
     var newQty = parseInt(currentQty.innerText) - 1;
-    currentQty.innerText = newQty;
-    var total = newQty * price.value + " Kyats";
-    totalAmountShow.innerText = total;
-    totalAmount.value = total;
-    qtyInput.value = newQty;
+    if (newQty > 0) {
+        currentQty.innerText = newQty;
+        var total = newQty * price.value + " Kyats";
+        totalAmountShow.innerText = total;
+        totalAmount.value = total;
+        qtyInput.value = newQty;
+    }
 };

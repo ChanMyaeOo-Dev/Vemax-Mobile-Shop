@@ -27,6 +27,9 @@
                                      </div>
                                      <p class="mb-3 text-black-50">{{ $product->description }}</p>
                                      <p class="mb-0 text-dark fw-bold fs-5">{{ $product->price }} Kyats</p>
+                                     <p class="text-black-50 fs-6 mb-0">
+                                         {{ $product->stock . ' items left.' }}
+                                     </p>
                                      {{-- Qty Update --}}
                                      <div id="update_div" class="d-inline-flex border rounded mt-2" style="height: 40px;">
                                          <button id="qtyMinusBtn" onclick="qtyMinus()" type="button"
@@ -115,6 +118,8 @@
                          <form id="orderUploadForm" action="{{ route('buyNowOrderUpload') }}" method="POST">
                              @csrf
                              <input type="hidden" name="product_id" value="{{ $product->id }}">
+                             <input type="hidden" name="currentProductStock" id="currentProductStock"
+                                 value="{{ $product->stock }}">
                              <input type="hidden" id="total_amount" name="total_amount" value="{{ $product->price }}">
                              <input type="hidden" name="qty" value="1" id="qtyInput">
                          </form>

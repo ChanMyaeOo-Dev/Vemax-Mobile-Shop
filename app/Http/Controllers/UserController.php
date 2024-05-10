@@ -24,6 +24,7 @@ class UserController extends Controller
             foreach ($order->orderDetails as $product) {
 
                 if ($order->status == "pending") {
+                    // dd($product->product->featured_image);
                     $customer_orders[] = [
                         "order_id" => $product->order_id,
                         "product_image" => $product->product->featured_image,
@@ -52,9 +53,9 @@ class UserController extends Controller
 
     public function orderDetail($id)
     {
-        // $order = Order::findOrFail($id);
+        $total_cost = Order::where('id', $id)->firstOrFail()->total_amount;
         $orders = OrderDetail::where("order_id", $id)->get();
-        return view('front_end.order.order_detail', compact('orders'));
+        return view('front_end.order.order_detail', compact('orders', 'total_cost'));
     }
     public function create()
     {

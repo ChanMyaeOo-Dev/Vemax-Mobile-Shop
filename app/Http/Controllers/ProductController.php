@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Photo;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
@@ -106,6 +108,12 @@ class ProductController extends Controller
     }
     public function destroy(Product $product)
     {
+        $isInOrder = OrderDetail::where('product_id', $product->id)->exists();
+
+        if ($isInOrder) {
+            return redirect()->route('products.index')->with("message", "You can not delete this product because it has customer order now.");
+        }
+
         if ($product->featured_image != "default_image.svg") {
             Storage::delete("public/" . $product->featured_image);
         }
