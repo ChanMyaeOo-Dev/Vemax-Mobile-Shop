@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
-use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Photo;
 use App\Models\Product;
@@ -26,7 +25,7 @@ class ProductController extends Controller
     }
     public function store(StoreProductRequest $request)
     {
-        // dd($request);
+        // dd($request->file('images'));
         $product = new Product();
         $product->title = $request->title;
         $product->slug = Str::slug($request->title);

@@ -77,8 +77,11 @@ class HomeController extends Controller
     public function detail($slug)
     {
         $product = Product::where("slug", "=", $slug)->firstOrFail();
+        $photos = $product->photos->pluck("image");
+        $featured_image = $product->featured_image;
+        $photos->prepend($featured_image);
         $related_products = Product::where("category_id", $product->category_id)->take(6)->get();
-        return view('front_end.shop.detail', compact('product', "related_products"));
+        return view('front_end.shop.detail', compact('product', 'photos', "related_products"));
     }
 
 

@@ -4,10 +4,36 @@
     <div class="row justify-content-between h-100 g-3">
 
         <div class="col-12">
-            <div class="card border-0 shadow bg-white">
+            <div class="card bg-white">
                 <div class="card-body d-flex gap-5 p-5">
-                    <img src="{{ asset('storage/' . $product->featured_image) }}"
-                        class="shop_detail_image object-fit-cover rounded">
+                    {{-- <img src="{{ asset('storage/' . $product->featured_image) }}"
+                        class="shop_detail_image object-fit-cover rounded"> --}}
+                    <div class="shop_detail_image_container d-flex flex-column gap-2">
+
+                        <div class="swiper swiperMainImage">
+                            <div class="swiper-wrapper">
+                                @foreach ($photos as $photo)
+                                    <div class="swiper-slide">
+                                        <img class="object-fit-cover" src="{{ asset('storage/' . $photo) }}" />
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+
+                        <div class="swiper swiperThumbnail">
+                            <div class="swiper-wrapper">
+                                @foreach ($photos as $photo)
+                                    <div class="swiper-slide">
+                                        <img class="object-fit-cover" src="{{ asset('storage/' . $photo) }}" />
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div>
                         <p class="fw-bold text-black mb-4 h3">{{ $product->title }}</p>
                         <p class="mb-1 text-black">Description</p>
@@ -27,7 +53,7 @@
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <button id="cart_submit_btn{{ $product->id }}" type="submit"
-                                        class="btn btn-outline-primary w-100">Add to
+                                        class="btn btn-primary w-100">Add to
                                         Cart</button>
                                     <button id="loading_btn{{ $product->id }}"
                                         class="btn btn-light w-100 d-none align-items-center justify-content-center gap-1"
@@ -42,13 +68,14 @@
                             <a href="{{ route('buy-now', $product->slug) }}" class="btn btn-outline-dark">Buy Now</a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
 
         <div class="col-12">
             {{-- Main Card --}}
-            <div class="card border-0 shadow bg-white mb-4">
+            <div class="card bg-white mb-4">
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex align-items-baseline mb-3 pb-3 border-bottom">
                         <p class="text-primary fw-bold fs-5 mb-0 me-auto">
@@ -93,5 +120,9 @@
     </div>
     @push('addToCartScript')
         @vite('resources/js/addToCart.js')
+    @endpush
+
+    @push('imageSwiperScript')
+        @vite('resources/js/imageSwiper.js')
     @endpush
 @endsection

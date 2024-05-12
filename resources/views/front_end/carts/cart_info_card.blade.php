@@ -12,7 +12,7 @@
 
                          <div class="d-flex">
                              <img src="{{ asset('storage/' . $cart->product->featured_image) }}" height="180px"
-                                 width="180px" class=" object-fit-cover rounded shadow me-4">
+                                 width="180px" class=" object-fit-cover rounded me-4">
                              <div class="menu_info_box">
                                  <p class="mb-0 text-dark fw-bold fs-5">{{ $cart->product->title }}</p>
                                  <div class="d-flex align-items-center small">
@@ -22,7 +22,8 @@
                                      <i class=" text-black-50 bi bi-star-fill"></i>
                                      <i class=" text-black-50 bi bi-star-half"></i>
                                  </div>
-                                 <p class="mb-3 text-black-50">{{ $cart->product->description }}</p>
+                                 <p class="mb-3 text-black-50">{{ Str::words($cart->product->description, 10, '...') }}
+                                 </p>
                                  <p class="mb-0 text-dark fw-bold fs-5">{{ $cart->product->price }} Kyats</p>
                                  {{-- Qty Update --}}
                                  <button id="loading_btn{{ $cart->id }}"

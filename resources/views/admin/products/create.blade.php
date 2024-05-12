@@ -117,20 +117,47 @@
                 `<div class="img_box"><img src="${URL.createObjectURL(event.target.files[0])}" class="w-100 h-100 output object-fit-cover rounded"></div>`;
         };
 
-        let loadFile = function(event) {
-            [...event.target.files].map((file, index) => {
-                document.getElementById('imgContainer').innerHTML +=
-                    `
-                    <div class="img_box">
-                        <img src="${URL.createObjectURL(file)}" class="w-100 h-100 output object-fit-cover rounded">
-                        <button onclick="btnOnClick(event)" id="${index}" class="img_delete_btn">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                    `;
+        // let loadFile = function(event) {
+        //     console.log(...event.target.files);
+        //     [...event.target.files].map((file, index) => {
+        //         document.getElementById('imgContainer').innerHTML = "";
+        //         document.getElementById('imgContainer').innerHTML +=
+        //             `
+    //         <div class="img_box">
+    //             <img src="${URL.createObjectURL(file)}" class="w-100 h-100 output object-fit-cover rounded">
+    //             <button onclick="btnOnClick(event)" id="${index}" class="img_delete_btn">
+    //                 <i class="fas fa-trash-alt"></i>
+    //             </button>
+    //         </div>
+    //         `;
+        //     });
+        // };
 
+        let loadFile = function(event) {
+            const imgContainer = document.getElementById('imgContainer');
+            imgContainer.innerHTML = ''; // Clear previous content
+            [...event.target.files].forEach((file, index) => {
+                const imgBox = document.createElement('div');
+                imgBox.classList.add('img_box');
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.classList.add('w-100', 'h-100', 'output', 'object-fit-cover', 'rounded');
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i>`;
+                deleteBtn.id = index;
+                deleteBtn.classList.add('img_delete_btn');
+                deleteBtn.addEventListener('click', (event) => {
+                    btnOnClick(event);
+                });
+
+                imgBox.appendChild(img);
+                imgBox.appendChild(deleteBtn);
+                imgContainer.appendChild(imgBox);
             });
         };
+
 
         function btnOnClick(event) {
             event.preventDefault();
@@ -152,17 +179,27 @@
         }
 
         function updateImageList(files) {
-            document.getElementById('imgContainer').innerHTML = "";
-            [...files].map((file, index) => {
-                document.getElementById('imgContainer').innerHTML +=
-                    `
-                    <div class="img_box">
-                        <img src="${URL.createObjectURL(file)}" class="border border-danger w-100 h-100 output object-fit-cover rounded">
-                        <button onclick="btnOnClick(event)" id="${index}" class="img_delete_btn">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                    `;
+            const imgContainer = document.getElementById('imgContainer');
+            imgContainer.innerHTML = ''; // Clear previous content
+            [...files].forEach((file, index) => {
+                const imgBox = document.createElement('div');
+                imgBox.classList.add('img_box');
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.classList.add('w-100', 'h-100', 'output', 'object-fit-cover', 'rounded');
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = `<i class="fas fa-trash-alt"></i>`;
+                deleteBtn.id = index;
+                deleteBtn.classList.add('img_delete_btn');
+                deleteBtn.addEventListener('click', (event) => {
+                    btnOnClick(event);
+                });
+
+                imgBox.appendChild(img);
+                imgBox.appendChild(deleteBtn);
+                imgContainer.appendChild(imgBox);
             });
         }
     </script>

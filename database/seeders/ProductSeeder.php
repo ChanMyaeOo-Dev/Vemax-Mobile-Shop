@@ -3,20 +3,22 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Photo;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+    protected $counter = 1;
+
     public function run()
     {
-        $description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum porro facilis qui blanditiis delectus, deleniti adipisci recusandae repellendus rerum perspiciatis sit illum. Distinctio incidunt voluptas id neque mollitia illo consequuntur.";
+        $description = "200W GESAMTLEISTUNG: Ausgestattet mit zwei leistungsstarken USB-C-Anschlüssen und einem USB-A Anschluss mit einer Gesamtleistung von 200W, für maximale Effizienz! Lade mit deiner Powerbank zwei Laptops gleichzeitig schnell mit jeweils 100W.
+SCHNELL WIEDERAUFGELADEN: Durch die 100W-Schnellaufladung über den USB-C-Anschluss und die Anker Prime-Ladestation ist die Powerbank in 1 Stunde und 15 Minuten vollständig aufgeladen.
+POWER ZUM MITNEHMEN: Mit seinem kleinen, kompakten Design mit den Maßen 126,9 x 54,6 x 49,6mm passt die 20.000mAh Powerbank perfekt in deine Laptoptasche oder deinen Rucksack, ideal für unterwegs.
+INFOS & UPDATES: Vollständige Kontrolle und Übersicht dank dem praktischen Display, welches Kapazität, Akkuleistung deiner Powerbank anzeigt.";
 
         $watches = [
             "Smart Watch 1",
@@ -33,7 +35,9 @@ class ProductSeeder extends Seeder
             "product_watch_5.jpg",
         ];
         foreach ($watches as $key => $watch) {
+            $current_id = $this->generateUniqueId();
             Product::factory()->create([
+                'id' => $current_id,
                 'title' => $watch,
                 'slug' => Str::slug($watch),
                 'description' => $description,
@@ -42,6 +46,12 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'stock' => 10,
             ],);
+            foreach ($watch_images as $img) {
+                Photo::factory()->create([
+                    "product_id" => $current_id,
+                    "image" => $img
+                ]);
+            }
         }
 
         //Covers
@@ -57,7 +67,9 @@ class ProductSeeder extends Seeder
             "product_cover_3.jpg",
         ];
         foreach ($covers as $key => $cover) {
+            $current_id = $this->generateUniqueId();
             Product::factory()->create([
+                'id' => $current_id,
                 'title' => $cover,
                 'slug' => Str::slug($cover),
                 'description' => $description,
@@ -66,6 +78,12 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'stock' => 10,
             ],);
+            foreach ($cover_images as $img) {
+                Photo::factory()->create([
+                    "product_id" => $current_id,
+                    "image" => $img
+                ]);
+            }
         }
         //Power Banks
 
@@ -84,7 +102,10 @@ class ProductSeeder extends Seeder
             "product_powerbank_5.jpg",
         ];
         foreach ($power_banks as $key => $power_bank) {
+            $current_id = $this->generateUniqueId();
+
             Product::factory()->create([
+                'id' => $current_id,
                 'title' => $power_bank,
                 'slug' => Str::slug($power_bank),
                 'description' => $description,
@@ -93,6 +114,12 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'stock' => 10,
             ],);
+            foreach ($power_bank_images as $img) {
+                Photo::factory()->create([
+                    "product_id" => $current_id,
+                    "image" => $img
+                ]);
+            }
         }
 
         //Earphones
@@ -110,7 +137,10 @@ class ProductSeeder extends Seeder
             "product_earphone_4.jpg",
         ];
         foreach ($ear_phones as $key => $ear_phone) {
+            $current_id = $this->generateUniqueId();
+
             Product::factory()->create([
+                'id' => $current_id,
                 'title' => $ear_phone,
                 'slug' => Str::slug($ear_phone),
                 'description' => $description,
@@ -119,8 +149,19 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'stock' => 10,
             ],);
+            foreach ($ear_phone_images as $img) {
+                Photo::factory()->create([
+                    "product_id" => $current_id,
+                    "image" => $img
+                ]);
+            }
         }
 
         Product::factory(100)->create();
+    }
+
+    protected function generateUniqueId()
+    {
+        return $this->counter++;
     }
 }
