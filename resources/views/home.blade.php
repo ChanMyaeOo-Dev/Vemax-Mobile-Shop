@@ -116,11 +116,11 @@
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <button id="cart_submit_btn{{ $product->id }}" type="submit"
-                                            class="cart_submit_btn rounded-0 btn btn-light shadow w-100 mt-3">
-                                            <i class="fas fa-cart-plus text-secondary me-1"></i>
+                                            class="cart_submit_btn btn btn-outline-dark rounded-pill w-100 mt-3">
+                                            <i class="fas fa-cart-plus me-1"></i>
                                             Add to Cart</button>
                                         <button id="loading_btn{{ $product->id }}"
-                                            class=" rounded-0 btn btn-light shadow w-100 mt-3 d-none align-items-center justify-content-center gap-1"
+                                            class="btn btn-outline-dark rounded-pill w-100 mt-3 d-none align-items-center justify-content-center gap-1"
                                             type="button" disabled>
                                             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                                             <span role="status">Loading...</span>
