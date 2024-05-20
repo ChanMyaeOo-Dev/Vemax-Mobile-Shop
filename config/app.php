@@ -199,6 +199,8 @@ return [
         // CartCount
         CartCountServiceProvider::class,
 
+        //PDF
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*

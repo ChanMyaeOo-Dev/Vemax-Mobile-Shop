@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("total_amount");
             $table->foreignId("customer_id");
-            $table->enum("status", ["pending", "delivered"])->default("pending");
+            $table->enum("status", ["pending", "shipping", "delivered"])->default("pending");
             $table->timestamps();
         });
     }

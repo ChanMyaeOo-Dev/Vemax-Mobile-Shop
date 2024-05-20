@@ -10,7 +10,7 @@
                         <div class="card bg-white h-100">
                             <div class="card-body d-flex flex-column">
                                 <p class="text-primary fw-bold fs-5 mb-3 pb-3 border-bottom">
-                                    <i class="bi bi-fire me-2"></i> Popular Items
+                                    <i class="fas fa-fire me-2"></i> Popular Items
                                 </p>
                                 <div class="mb-auto">
                                     @foreach ($get_6_products as $product)

@@ -36,4 +36,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource("users", UserController::class);
     Route::resource("carts", CartController::class);
     Route::get("order-detail/{id}", [UserController::class, "orderDetail"])->name("order-detail");
+
+    Route::get('generatePDF/{id}', [UserController::class, "generatePDF"])->name("generatePDF");
 });

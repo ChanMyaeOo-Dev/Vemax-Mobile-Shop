@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
+// use Barryvdh\DomPDF\Facade\PDF;
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,6 +60,15 @@ class UserController extends Controller
         $total_cost = Order::where('id', $id)->firstOrFail()->total_amount;
         $orders = OrderDetail::where("order_id", $id)->get();
         return view('front_end.order.order_detail', compact('orders', 'total_cost'));
+    }
+
+    public function generatePDF($id)
+    {
+        $total_cost = Order::where('id', $id)->firstOrFail()->total_amount;
+        $orders = OrderDetail::where("order_id", $id)->get();
+        $data = ['title' => 'Welcome to Laravel PDF Generation', 'orders' => $orders];
+        $pdf = PDF::loadView('front_end.print', $data);
+        return $pdf->download('document222.pdf');
     }
     public function create()
     {

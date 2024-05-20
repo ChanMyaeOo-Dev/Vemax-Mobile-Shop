@@ -113,7 +113,7 @@ class OrderController extends Controller
         }
 
         // Clear Cart
-        Cart::where("user_id", Auth::id())->orderBy("id", "desc")->delete();
+        // Cart::where("user_id", Auth::id())->orderBy("id", "desc")->delete();
         return view('front_end.order.receipt', compact("orderItem", "orderProducts", "total_amount"));
     }
 
