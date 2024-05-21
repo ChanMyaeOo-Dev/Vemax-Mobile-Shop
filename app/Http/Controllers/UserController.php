@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Models\User;
 // use Barryvdh\DomPDF\Facade\PDF;
 // use PDF;
@@ -55,18 +56,37 @@ class UserController extends Controller
         return view('front_end.profile', compact("user", "customer_orders", "delivered_orders"));
     }
 
-    public function orderDetail($id)
+    public function orderDetail($order_id)
     {
-        $total_cost = Order::where('id', $id)->firstOrFail()->total_amount;
-        $orders = OrderDetail::where("order_id", $id)->get();
-        return view('front_end.order.order_detail', compact('orders', 'total_cost'));
+        $total_cost = Order::where('id', $order_id)->firstOrFail()->total_amount;
+        $orders = OrderDetail::where("order_id", $order_id)->get();
+
+        $delivery_fee = 2500;
+        $all_total_cost = intval($total_cost) + 2500;
+        return view('front_end.order.order_detail', compact("order_id", 'orders', 'total_cost', 'all_total_cost'));
     }
 
     public function generatePDF($id)
     {
         $total_cost = Order::where('id', $id)->firstOrFail()->total_amount;
+        $delivery_fee = 2500;
+        $all_total = $total_cost + $delivery_fee;
         $orders = OrderDetail::where("order_id", $id)->get();
-        $data = ['title' => 'Welcome to Laravel PDF Generation', 'orders' => $orders];
+
+        $customer_name = $orders[0]->name;
+        $customer_phone = $orders[0]->phone;
+        $customer_address = $orders[0]->address;
+
+        $data = [
+            'orders' => $orders,
+            'total_cost' => $total_cost,
+            "delivery_fee" => $delivery_fee,
+            "all_total" => $all_total,
+            "customer_name" => $orders[0]->name,
+            "customer_phone" => $orders[0]->phone,
+            "customer_address" => $orders[0]->address,
+        ];
+
         $pdf = PDF::loadView('front_end.print', $data);
         return $pdf->download('document222.pdf');
     }
@@ -94,7 +114,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $products = Product::all();
+        return response()->json($products);
     }
 
     /**

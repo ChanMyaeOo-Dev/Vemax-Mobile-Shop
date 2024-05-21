@@ -10,7 +10,7 @@
                         <li class="breadcrumb-item active" aria-current="page">Order detail</li>
                     </ol>
                 </nav>
-                <a href="{{ route('generatePDF', $orders[0]->id) }}" class="btn btn-outline-dark text-nowrap h-100">
+                <a href="{{ route('generatePDF', $order_id) }}" class="btn btn-outline-dark text-nowrap h-100">
                     <i class="fas fa-download fa-xs me-1"></i>
                     Download Invoice
                 </a>
@@ -119,6 +119,16 @@
                                         2500 MMK
                                     </td>
                                 </tr>
+
+                                <tr>
+                                    <td class="w-50">
+                                        <p class="mb-0 ms-2 text-black">Total</p>
+                                    </td>
+                                    <td class="w-25 text-end">
+                                        {{ $all_total_cost . ' MMK' }}
+                                    </td>
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>

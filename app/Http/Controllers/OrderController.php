@@ -113,8 +113,10 @@ class OrderController extends Controller
         }
 
         // Clear Cart
-        // Cart::where("user_id", Auth::id())->orderBy("id", "desc")->delete();
-        return view('front_end.order.receipt', compact("orderItem", "orderProducts", "total_amount"));
+        Cart::where("user_id", Auth::id())->orderBy("id", "desc")->delete();
+        $order_id = $order->id;
+
+        return view('front_end.order.receipt', compact("order_id", "orderItem", "orderProducts", "total_amount"));
     }
 
     public function show(Order $order)
@@ -181,6 +183,12 @@ class OrderController extends Controller
         $orderItem->address = $request->address;
         $orderItem->save();
 
-        return view('front_end.order.buy_now_receipt', compact("orderItem", "product", "qty", "total_amount"));
+        $currentProductStock = $product->stock;
+        $product->stock = $currentProductStock - $qty;
+        $product->update();
+
+        $order_id = $order->id;
+
+        return view('front_end.order.buy_now_receipt', compact("order_id", "orderItem", "product", "qty", "total_amount"));
     }
 }

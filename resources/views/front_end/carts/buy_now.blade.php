@@ -3,13 +3,13 @@
  @section('content')
      <div class="row justify-content-between">
          <div class="col-md-8">
-             <div class="bg-white border border-1 rounded p-4">
+             <div class="bg-white rounded d-flex flex-column h-100 border border-1 p-4">
                  <div class="d-flex align-items-baseline mb-3 pb-3 border-bottom">
                      <p class="text-primary fw-bold fs-4 mb-0">
                          Pre-CheckOut Form
                      </p>
                  </div>
-                 <div class="card border-0 border-bottom mb-4">
+                 <div class="card border-0 flex-grow-1">
                      <div class="card-body">
                          <div class="d-flex justify-content-between">
 
@@ -55,7 +55,7 @@
          </div>
          <div class="col-md-4">
              {{-- Delivery Details --}}
-             <div class="card border-0 mb-4">
+             <div class="card border-0">
                  <div class="card-body bg-white border border-1 rounded p-4">
                      <p class="fs-5 fw-bold text-dark mb-3 pb-3 border-bottom">Delivery</p>
                      <div>

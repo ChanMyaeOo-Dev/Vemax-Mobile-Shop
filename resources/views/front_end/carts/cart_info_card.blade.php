@@ -1,5 +1,5 @@
  <div class="col-md-8">
-     <div class="bg-white border border-1 rounded p-4">
+     <div class="bg-white border border-1 rounded p-4 h-100">
          <div class="d-flex align-items-baseline mb-3 pb-3 border-bottom">
              <p class="text-primary fw-bold fs-4 mb-0">
                  My Cart
@@ -25,6 +25,9 @@
                                  <p class="mb-3 text-black-50">{{ Str::words($cart->product->description, 10, '...') }}
                                  </p>
                                  <p class="mb-0 text-dark fw-bold fs-5">{{ $cart->product->price }} Kyats</p>
+                                 <p class="text-black-50 fs-6 mb-0">
+                                     {{ $cart->product->stock . ' items left.' }}
+                                 </p>
                                  {{-- Qty Update --}}
                                  <button id="loading_btn{{ $cart->id }}"
                                      class="btn btn-light mt-2 d-none align-items-center justify-content-center gap-1"
@@ -39,7 +42,8 @@
                                          @csrf
                                          @method('PUT')
                                          <input type="hidden" name="cart_id" value="{{ $cart->id }}">
-                                         <input type="hidden" name="updateAction" id="updateAction{{ $cart->id }}">
+                                         <input type="hidden" name="updateAction"
+                                             id="updateAction{{ $cart->id }}">
                                          <!-- No initial value set -->
                                      </form>
                                      <button id="btnUpdateCartMinus{{ $cart->id }}" type="button"
@@ -77,7 +81,7 @@
  </div>
  <div class="col-md-4">
      {{-- Delivery Details --}}
-     <div class="card border-0 mb-4">
+     <div class="card border-0">
          <div class="card-body bg-white border border-1 rounded p-4">
              <p class="fs-5 fw-bold text-dark mb-3 pb-3 border-bottom">Delivery</p>
              <div>

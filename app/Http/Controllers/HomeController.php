@@ -12,16 +12,16 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $get_6_categories = Category::take(6)->get();
-        $get_6_products = Product::take(6)->get();
-        $get_12_products = Product::take(12)->get();
-        $feature_product = Product::latest()->first();
+        $get_6_products = Product::where('stock', '>', 1)->take(6)->get();
+        $get_12_products = Product::where('stock', '>', 1)->take(12)->get();
+        $feature_product = Product::where('stock', '>', 1)->latest()->first();
 
         if (!isset(request()->search)) {
-            $products = Product::orderBy("id", "desc")->paginate(12);
+            $products = Product::where('stock', '>', 1)->orderBy("id", "desc")->paginate(12);
             return view('home', compact('products', "feature_product", "categories", "get_6_categories", "get_12_products", "get_6_products"));
         } else {
             $search = request()->search;
-            $products = Product::where(function ($query) use ($search) {
+            $products = Product::where('stock', '>', 1)->where(function ($query) use ($search) {
                 $query->where("name", "like", "%$search%")
                     ->orWhere("description", "like", "%$search%");
             })->paginate(12);
@@ -68,7 +68,7 @@ class HomeController extends Controller
             $category_title = Category::findOrFail($category)->title;
         }
 
-        $products = $query->paginate(24);
+        $products = $query->where('stock', '>', 1)->paginate(24);
         $products->appends(['search' => $search, 'sort_by' => $sortBy, 'category' => $category]);
 
         return view('shop', compact('categories', 'category', 'category_title', 'products',  "search", 'sortBy'));
@@ -76,7 +76,7 @@ class HomeController extends Controller
 
     public function detail($slug)
     {
-        $product = Product::where("slug", "=", $slug)->firstOrFail();
+        $product = Product::where('stock', '>', 1)->where("slug", "=", $slug)->firstOrFail();
         $photos = $product->photos->pluck("image");
         $featured_image = $product->featured_image;
         $photos->prepend($featured_image);

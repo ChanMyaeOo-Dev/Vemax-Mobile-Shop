@@ -45,7 +45,10 @@
                                 <span class="small">UNCATEGORIZE</span>
                             @endisset
                         </p>
-                        <p class="mb-3 mt-4 text-black fw-bold fs-5">{{ $product->price . ' MMK' }}</p>
+                        <p class="mb-0 mt-4 text-black fw-bold fs-5">{{ $product->price . ' MMK' }}</p>
+                        <p class="text-black-50 fs-6 mb-3">
+                            {{ $product->stock . ' items left.' }}
+                        </p>
 
                         <div class="d-flex gap-2">
                             @auth

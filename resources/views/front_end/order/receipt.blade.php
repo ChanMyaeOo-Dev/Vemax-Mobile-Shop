@@ -109,10 +109,17 @@
                         </table>
                     </div>
 
-                    <button class="btn btn-outline-dark text-nowrap float-end mt-3">
-                        <i class="fas fa-download fa-xs me-1"></i>
-                        Download Invoice
-                    </button>
+                    <div class="d-flex align-items-center gap-2 justify-content-end">
+                        <a href="{{ route('generatePDF', $order_id) }}"
+                            class="btn btn-outline-dark text-nowrap float-end mt-3">
+                            <i class="fas fa-download fa-xs me-1"></i>
+                            Download Invoice
+                        </a>
+                        <a href="{{ route('/') }}" class="btn btn-primary text-nowrap float-end mt-3">
+                            <i class="fas fa-shopping-basket fa-xs me-1"></i>
+                            Continue Shopping
+                        </a>
+                    </div>
 
                 </div>
             </div>
