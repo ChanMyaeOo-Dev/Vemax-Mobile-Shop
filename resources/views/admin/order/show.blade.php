@@ -29,7 +29,7 @@
                                             <td>Name</td>
                                             <td>PHONE</td>
                                             <td>ADDRESS</td>
-                                            <td>Type</td>
+                                            <td class="text-end">Type</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -37,7 +37,7 @@
                                             <td>{{ $order->customer->name }}</td>
                                             <td>{{ $order->customer->phone }}</td>
                                             <td>{{ '-' }}</td>
-                                            <td>
+                                            <td class=" text-end">
                                                 <span class="badge text-bg-secondary text-white">Registration</span>
                                             </td>
                                         </tr>
@@ -46,7 +46,7 @@
                                             <td>{{ $products[0]->name }}</td>
                                             <td>{{ $products[0]->phone }}</td>
                                             <td>{{ $products[0]->address }}</td>
-                                            <td>
+                                            <td class=" text-end">
                                                 <span class="badge text-bg-primary text-white">Shipping Information</span>
                                             </td>
                                         </tr>
@@ -65,8 +65,8 @@
                                     <thead>
                                         <tr>
                                             <td>PRODUCT</td>
-                                            <td>QTY</td>
-                                            <td>PRICE</td>
+                                            <td class="text-end">UNIT PRICE</td>
+                                            <td class="text-end">COST</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,12 +77,12 @@
                                             <tr>
                                                 <td>
                                                     <a href="{{ route('products.show', $product->product->id) }}"
-                                                        class=" text-secondary text-decoration-none">
+                                                        class="text-secondary text-decoration-none">
                                                         {{ $product->product->title }}
                                                     </a>
                                                 </td>
-                                                <td>{{ $product->qty }}</td>
-                                                <td>{{ $product->price . ' Kyats' }}</td>
+                                                <td class="text-end">{{ $product->price . ' MMK x ' . $product->qty }}</td>
+                                                <td class="text-end">{{ $product->price * $product->qty . ' Kyats' }}</td>
                                                 @php
                                                     $total = $total + $product->price;
                                                 @endphp
@@ -92,7 +92,7 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="2" class=" text-primary fw-bold">TOTAL</td>
-                                            <td class=" text-primary fw-bold">{{ $total . ' Kyats' }}</td>
+                                            <td class="text-end text-primary fw-bold">{{ $total . ' Kyats' }}</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -106,10 +106,10 @@
 
                                 <p class="mb-3">Order Status ({{ $order->status }})</p>
 
-                                <div class="p-3 mb-4">
+                                <div class="p-3 mb-4 d-flex align-items-center justify-content-center">
                                     <svg class="animated" id="freepik_stories-deadline" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 500 500" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        xmlns:svgjs="http://svgjs.com/svgjs">
+                                        xmlns:svgjs="http://svgjs.com/svgjs" style="height: 200px">
                                         <style>
                                             svg#freepik_stories-deadline:not(.animated) .animable {
                                                 opacity: 0;
@@ -1217,28 +1217,41 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <form action="{{ route('orders.update', $order->id) }}" method="POST">
+
+                                <form action="{{ route('orders.update', $order->id) }}"
+                                    method="POST">
                                     @csrf
                                     @method('PUT')
-                                    @if ($order->status == 'pending')
-                                        <input type="hidden" name="id" value="{{ $order->id }}">
-                                        <input type="hidden" name="status" value="delivered">
-                                        <button class="btn btn-primary py-2 w-100">
+                                    <input type="hidden" name="id" value="{{ $order->id }}">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" value="pending"
+                                            id="pending_radio" {{ $order->status == 'pending' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="pending_radio">
+                                            Pending
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" value="shipping"
+                                            id="shipping_radio" {{ $order->status == 'shipping' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="shipping_radio">
                                             Send To Delivery
-                                        </button>
-                                    @else
-                                        <input type="hidden" name="id" value="{{ $order->id }}">
-                                        <input type="hidden" name="status" value="pending">
-                                        <button class="btn btn-primary py-2 w-100">
-                                            Redo
-                                        </button>
-                                    @endif
+                                        </label>
+                                    </div>
 
-
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" value="delivered"
+                                            id="delivered_radio" {{ $order->status == 'delivered' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="delivered_radio">
+                                            Delivered
+                                        </label>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mt-3">
+                                    Update Status
+                                </button>
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="my-5 w-100 bg-white"></div>

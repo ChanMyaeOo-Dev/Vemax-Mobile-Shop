@@ -32,19 +32,21 @@ class HomeController extends Controller
     public function shop(Request $request)
     {
         $categories = Category::all();
-        $products = Product::latest()->paginate(24);
+        $products = Product::latest()->paginate(16);
+        // $products = Product::whereBetween("price", ["1000", "200000"])->paginate(24);
         return view('shop', compact('products',  "categories"));
     }
 
 
     public function search(Request $request)
     {
+        // dd($request);
         $categories = Category::all();
 
         $search = $request->search;
         $category = $request->category;
-        $category_title = "";
         $sortBy = $request->sort_by;
+        $priceRange = $request->priceRange;
 
         $query = Product::query();
 
@@ -64,14 +66,21 @@ class HomeController extends Controller
         }
         // Filter by category
         if ($category) {
-            $query->where('category_id', $category);
-            $category_title = Category::findOrFail($category)->title;
+            if ($category == "all_category") {
+                $query->orderBy('id', 'desc');
+            } else {
+                $query->where('category_id', $category);
+            }
         }
 
-        $products = $query->where('stock', '>', 1)->paginate(24);
-        $products->appends(['search' => $search, 'sort_by' => $sortBy, 'category' => $category]);
+        if ($priceRange) {
+            $query->whereBetween("price", [5000, $priceRange]);
+        }
 
-        return view('shop', compact('categories', 'category', 'category_title', 'products',  "search", 'sortBy'));
+        $products = $query->where('stock', '>', 1)->paginate(16);
+        $products->appends(['search' => $search, 'sort_by' => $sortBy, 'category' => $category, 'priceRange' => $priceRange]);
+
+        return view('shop', compact('categories', 'category',  'products',  "search", 'sortBy', 'priceRange'));
     }
 
     public function detail($slug)

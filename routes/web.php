@@ -29,7 +29,8 @@ Route::middleware(["auth"])->prefix("admin")->group(function () {
     Route::resource("photos", PhotoController::class);
     Route::resource("orders", OrderController::class);
 
-    Route::get('/order-history', [OrderController::class, "orderHistory"])->name('order-history');
+    Route::get('/order-shipping', [OrderController::class, "shippingOrders"])->name('order-shipping');
+    Route::get('/order-delivered', [OrderController::class, "deliveredOrders"])->name('order-delivered');
 });
 //Auth Routes
 Route::middleware(['auth'])->group(function () {

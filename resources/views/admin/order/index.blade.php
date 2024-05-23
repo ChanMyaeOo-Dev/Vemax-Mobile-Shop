@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class=" d-flex align-items-center justify-content-between mb-2">
-            <h1 class="h3 text-gray-800">Orders</h1>
+            <h1 class="h3 text-gray-800">New Orders</h1>
         </div>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -13,8 +13,8 @@
                     <table class="table table-bordered mt-3" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Date</th>
                                 <th>Customer</th>
-                                <th>Total Order</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -25,16 +25,15 @@
                             @foreach ($customer_orders as $order)
                                 <tr>
                                     <td>
+                                        {{ $order['date'] }}
+                                    </td>
+                                    <td>
                                         <div class="d-flex align-items-center gap-2">
                                             <img src="{{ asset('storage/' . $order['customer_profile_image']) }}"
                                                 class="img-1 rounded">
                                             <p class="mb-0">{{ $order['customer_name'] }}</p>
                                         </div>
                                     </td>
-                                    <td>
-                                        {{ $order['product_count'] . ' Orders' }}
-                                    </td>
-
                                     <td>
                                         {{ $order['order_status'] }}
                                     </td>

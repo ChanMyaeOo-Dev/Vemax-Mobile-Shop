@@ -12,8 +12,13 @@
 
             <ul class="navbar-nav me-auto ps-3 border-start">
                 <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('shop') }}">Shop</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">About us</a>
                 </li>
+
                 <li class="nav-item mx-3">
                     <a class="nav-link" href="#">FAQs</a>
                 </li>

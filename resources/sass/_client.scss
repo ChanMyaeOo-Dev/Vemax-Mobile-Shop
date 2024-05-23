@@ -5,6 +5,34 @@
     grid-row-gap: 18px;
 }
 
+.search_item_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 18px;
+    grid-row-gap: 18px;
+}
+
+.search_item_container .product_card .category_label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 16px;
+    transition: 0.3s;
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.search_item_container .product_card:hover {
+    button {
+        background: $primary !important;
+        color: $white !important;
+    }
+    .category_label {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .profile_image {
     width: 200px;
     height: 200px;

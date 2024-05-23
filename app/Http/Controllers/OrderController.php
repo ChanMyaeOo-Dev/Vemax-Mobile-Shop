@@ -25,14 +25,14 @@ class OrderController extends Controller
             $id = $order->id;
             $customerName = $order->customer->name;
             $customerProfileImage = $order->customer->profile_image;
-            $productCount = $order->orderDetails->count();
             $order_status = $order->status;
+            $date = $order->created_at;
             $response = [
                 'id' => $id,
                 'customer_name' => $customerName,
                 'customer_profile_image' => $customerProfileImage,
-                'product_count' => $productCount,
                 'order_status' => $order_status,
+                'date' => $date,
             ];
 
             $customer_orders[] = $response;
@@ -41,7 +41,34 @@ class OrderController extends Controller
         return view('admin.order.index', compact("customer_orders"));
     }
 
-    public function orderHistory()
+    public function shippingOrders()
+    {
+        $orders = Order::where("status", "shipping")->with(['customer', 'orderDetails'])
+            ->get();
+
+        $customer_orders = [];
+
+        foreach ($orders as $order) {
+            $id = $order->id;
+            $customerName = $order->customer->name;
+            $customerProfileImage = $order->customer->profile_image;
+            $order_status = $order->status;
+            $date = $order->created_at;
+            $response = [
+                'id' => $id,
+                'customer_name' => $customerName,
+                'customer_profile_image' => $customerProfileImage,
+                'order_status' => $order_status,
+                'date' => $date,
+            ];
+
+            $customer_orders[] = $response;
+        }
+
+        return view('admin.order.index', compact("customer_orders"));
+    }
+
+    public function deliveredOrders()
     {
         $orders = Order::where("status", "delivered")->with(['customer', 'orderDetails'])
             ->get();
@@ -52,14 +79,14 @@ class OrderController extends Controller
             $id = $order->id;
             $customerName = $order->customer->name;
             $customerProfileImage = $order->customer->profile_image;
-            $productCount = $order->orderDetails->count();
             $order_status = $order->status;
+            $date = $order->created_at;
             $response = [
                 'id' => $id,
                 'customer_name' => $customerName,
                 'customer_profile_image' => $customerProfileImage,
-                'product_count' => $productCount,
                 'order_status' => $order_status,
+                'date' => $date,
             ];
 
             $customer_orders[] = $response;
@@ -68,6 +95,7 @@ class OrderController extends Controller
         return view('admin.order.index', compact("customer_orders"));
     }
 
+
     public function create()
     {
         //
@@ -75,6 +103,10 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+        $userCarts = Cart::where("user_id", Auth::id())->get();
+        if (count($userCarts) <= 0) {
+            return redirect()->back();
+        }
         // Upload Order
         $order = new Order();
         $total_amount = $request->total_amount;
@@ -82,10 +114,6 @@ class OrderController extends Controller
         $order->customer_id = Auth::id();
         $order->save();
 
-        $userCarts = Cart::where("user_id", Auth::id())->get();
-        if (count($userCarts) <= 0) {
-            return redirect()->back();
-        }
         $allProducts = [];
         $orderProducts = [];
 
@@ -124,17 +152,6 @@ class OrderController extends Controller
         $products = OrderDetail::where("order_id", "=", $order->id)->get();
         return view('admin.order.show', compact('order', 'products'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
-    {
-        //
-    }
     public function update(UpdateOrderRequest $request, Order $order)
     {
         $order->status = $request->status;
@@ -142,13 +159,6 @@ class OrderController extends Controller
 
         return redirect()->back()->with("message", "Status updated.");
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Order $order)
     {
         //

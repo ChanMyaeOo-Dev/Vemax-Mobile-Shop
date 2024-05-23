@@ -16,6 +16,7 @@
     @stack('addToCartScript')
     @stack('editCart')
     @stack('updateQty')
+    @stack('priceRangeScript')
 </head>
 
 <body>

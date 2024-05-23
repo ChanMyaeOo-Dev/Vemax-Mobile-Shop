@@ -2,6 +2,7 @@ import axios from "axios";
 
 window.updateCart = function updateCart(cartId, action) {
     var totalAmount = document.getElementById("totalAmount");
+    var fromTotalAmount = document.getElementById("fromTotalAmount");
 
     var currentCartCount = document.getElementById("currentCartCount" + cartId);
     var loadingBtn = document.getElementById("loading_btn" + cartId);
@@ -33,6 +34,7 @@ window.updateCart = function updateCart(cartId, action) {
                     window.location.reload();
                 }
                 totalAmount.innerText = response.data.totalCost + " Kyats";
+                fromTotalAmount.value = response.data.totalCost;
             }, 1000);
         })
         .catch(function (error) {
