@@ -12,6 +12,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @stack('imageSwiperScript')
+    @stack('confirmDialogScript')
+
 </head>
 
 <body id="page-top">
@@ -90,6 +93,14 @@
             showToast("{{ Session::get('message') }}");
         </script>
     @endif
+
+    @if (session('confirm_message'))
+        <script type="module">
+            showConfirmDialog("hello");
+            // showConfirmDialog("{{ Session::get('message') }}");
+        </script>
+    @endif
+
 </body>
 
 </html>

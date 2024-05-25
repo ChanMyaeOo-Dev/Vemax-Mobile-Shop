@@ -116,23 +116,6 @@
             document.getElementById('featureImageContainer').innerHTML =
                 `<div class="img_box"><img src="${URL.createObjectURL(event.target.files[0])}" class="w-100 h-100 output object-fit-cover rounded"></div>`;
         };
-
-        // let loadFile = function(event) {
-        //     console.log(...event.target.files);
-        //     [...event.target.files].map((file, index) => {
-        //         document.getElementById('imgContainer').innerHTML = "";
-        //         document.getElementById('imgContainer').innerHTML +=
-        //             `
-    //         <div class="img_box">
-    //             <img src="${URL.createObjectURL(file)}" class="w-100 h-100 output object-fit-cover rounded">
-    //             <button onclick="btnOnClick(event)" id="${index}" class="img_delete_btn">
-    //                 <i class="fas fa-trash-alt"></i>
-    //             </button>
-    //         </div>
-    //         `;
-        //     });
-        // };
-
         let loadFile = function(event) {
             const imgContainer = document.getElementById('imgContainer');
             imgContainer.innerHTML = ''; // Clear previous content

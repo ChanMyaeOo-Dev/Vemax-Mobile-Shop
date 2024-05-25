@@ -25,7 +25,6 @@ class ProductController extends Controller
     }
     public function store(StoreProductRequest $request)
     {
-        // dd($request->file('images'));
         $product = new Product();
         $product->title = $request->title;
         $product->slug = Str::slug($request->title);
@@ -58,7 +57,12 @@ class ProductController extends Controller
     }
     public function show(Product $product)
     {
-        return view('admin.products.show', compact('product'));
+        // $product = Product::where('stock', '>', 1)->where("slug", "=", $slug)->firstOrFail();
+        $photos = $product->photos->pluck("image");
+        $featured_image = $product->featured_image;
+        $photos->prepend($featured_image);
+        return view('admin.products.show', compact('product', 'photos'));
+        // return view('admin.products.show', compact('product'));
     }
 
     public function edit(Product $product)
@@ -110,17 +114,30 @@ class ProductController extends Controller
         $isInOrder = OrderDetail::where('product_id', $product->id)->exists();
 
         if ($isInOrder) {
-            return redirect()->route('products.index')->with("message", "You can not delete this product because it has customer order now.");
+            $order_detail = OrderDetail::where('product_id', $product->id)->firstOrFail();
+            $status = $order_detail->order->status;
+            if ($status == "pending") {
+                return response()->json(['success' => false, 'message' => 'You can not delete this product because it has customer order now.']);
+            }
+        }
+        // Perform the deletion
+        if ($product->delete()) {
+            return response()->json(['product' => $product, 'success' => true, 'message' => 'Product deleted successfully.']);
         }
 
-        if ($product->featured_image != "default_image.svg") {
-            Storage::delete("public/" . $product->featured_image);
-        }
-        foreach ($product->photos as $photo) {
-            Storage::delete("public/" . $photo->image_url);
-            $photo->delete();
-        }
-        $product->delete();
-        return redirect()->route('products.index')->with("message", "Deleted.");
+        // if ($product->featured_image != "default_image.svg") {
+        //     Storage::delete("public/" . $product->featured_image);
+        // }
+        // foreach ($product->photos as $photo) {
+        //     Storage::delete("public/" . $photo->image_url);
+        //     $photo->delete();
+        // }
+
+        // // Perform the deletion
+        // if ($product->delete()) {
+        //     return response()->json(['success' => true, 'message' => 'Product deleted successfully.']);
+        // }
+
+        return response()->json(['success' => false, 'message' => 'Product not found.']);
     }
 }

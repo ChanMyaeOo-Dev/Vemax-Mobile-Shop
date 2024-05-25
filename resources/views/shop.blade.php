@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-
+            {{-- Filter Section --}}
             <div class="col-3 min-vh-100 bg-white ps-0 p-4 rounded position-relative">
                 <div class=" position-sticky" style="top: 100px">
                     <form id="search_form" action="{{ route('search') }}" method="GET">

@@ -7,7 +7,7 @@
             <h1 class="h3 text-gray-800">Products</h1>
             <a href="{{ route('products.create') }}" class="btn btn-primary">Add Products</a>
         </div>
-        <!-- DataTales Example -->
+        <!-- DataTale -->
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
@@ -43,18 +43,17 @@
                                         <td class="small text-black-50">UNCATEGORIZE</td>
                                     @endisset
 
-                                    <td>{{ $product->stock }}</td>
+                                    <td>
+
+                                        @if ($product->stock <= 0)
+                                            <span class="text-danger">Out Of Stock</span>
+                                        @else
+                                            {{ $product->stock }}
+                                        @endif
+                                    </td>
                                     <td>{{ "$ " . $product->price }}</td>
                                     <td>
                                         <div class="d-flex align-items-center gap-1">
-                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST"
-                                                class="mb-0">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-sm btn-outline-dark border border-2">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
                                             <a href="{{ route('products.edit', $product->id) }}"
                                                 class="btn btn-sm btn-outline-dark border border-2">
                                                 <i class="fas fa-pencil-alt"></i>

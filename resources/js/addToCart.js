@@ -45,8 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }, 1000);
                 })
                 .catch(function (error) {
-                    console.error(error); // Log any errors (optional)
-                    // Handle error, such as displaying an error message to the user
+                    console.error(error);
                 });
         });
     });

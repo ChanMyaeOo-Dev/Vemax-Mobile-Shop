@@ -6,10 +6,7 @@
         <div class="col-12">
             <div class="card bg-white">
                 <div class="card-body d-flex gap-5 p-5">
-                    {{-- <img src="{{ asset('storage/' . $product->featured_image) }}"
-                        class="shop_detail_image object-fit-cover rounded"> --}}
                     <div class="shop_detail_image_container d-flex flex-column gap-2">
-
                         <div class="swiper swiperMainImage">
                             <div class="swiper-wrapper">
                                 @foreach ($photos as $photo)
@@ -77,7 +74,6 @@
         </div>
 
         <div class="col-12">
-            {{-- Main Card --}}
             <div class="card bg-white mb-4">
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex align-items-baseline mb-3 pb-3 border-bottom">

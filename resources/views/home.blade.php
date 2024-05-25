@@ -102,13 +102,17 @@
                     </div>
                     <div class="shop_item_container">
                         @foreach ($get_12_products as $product)
-                            <div class="product_card d-flex flex-column h-100 p-2">
+                            <div class="product_card d-flex flex-column h-100 bg-white p-2 position-relative">
+                                <span class="category_label badge text-bg-light">
+                                    {{ $product->category->title }}
+                                </span>
+
                                 <a href="{{ route('detail', $product->slug) }}"
                                     class="text-secondary text-decoration-none w-100 mb-auto">
-                                    <img src="{{ asset('storage/' . $product->featured_image) }}" height="180px"
-                                        class="product_image rounded bg-white w-100 object-fit-cover mb-3">
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}" height="150px"
+                                        class="rounded bg-white w-100 object-fit-cover mb-3">
                                     <p class="mb-0 text-center text-secondary">{{ $product->title }}</p>
-                                    <p class="mb-auto text-center text-dark">{{ $product->price }} <span
+                                    <p class="mb-auto text-center text-primary">{{ $product->price }} <span
                                             class="small">MMK</span></p>
                                 </a>
                                 @auth
@@ -116,11 +120,9 @@
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <button id="cart_submit_btn{{ $product->id }}" type="submit"
-                                            class="cart_submit_btn btn btn-outline-dark rounded-pill w-100 mt-3">
-                                            <i class="fas fa-cart-plus me-1"></i>
-                                            Add to Cart</button>
+                                            class="btn btn-light w-100 mt-3">Add to Cart</button>
                                         <button id="loading_btn{{ $product->id }}"
-                                            class="btn btn-outline-dark rounded-pill w-100 mt-3 d-none align-items-center justify-content-center gap-1"
+                                            class="btn btn-light w-100 mt-3 d-none align-items-center justify-content-center gap-1"
                                             type="button" disabled>
                                             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                                             <span role="status">Loading...</span>

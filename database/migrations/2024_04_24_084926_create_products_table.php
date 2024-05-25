@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string("featured_image");
             $table->string("stock");
             $table->foreignId("category_id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
