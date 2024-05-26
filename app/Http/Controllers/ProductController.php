@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\OrderDetail;
 use App\Models\Photo;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -139,5 +140,38 @@ class ProductController extends Controller
         // }
 
         return response()->json(['success' => false, 'message' => 'Product not found.']);
+    }
+
+    public function getTrash()
+    {
+        $products = Product::onlyTrashed()->latest()->get();
+        return view('admin.products.trash', compact("products"));
+    }
+
+    public function restore(Request $request)
+    {
+        $product = Product::onlyTrashed()
+            ->where('id', $request->id)
+            ->first();
+        $product->restore();
+        return redirect()->back()->with("message", "Successfully restored.");
+    }
+
+    public function forceDelete(Request $request)
+    {
+        $product = Product::onlyTrashed()
+            ->where('id', $request->id)
+            ->first();
+
+        if ($product->featured_image != "default_image.svg") {
+            Storage::delete("public/" . $product->featured_image);
+        }
+        foreach ($product->photos as $photo) {
+            Storage::delete("public/" . $photo->image);
+            $photo->delete();
+        }
+
+        $product->forceDelete();
+        return redirect()->back()->with("message", "Successfully deleted.");
     }
 }

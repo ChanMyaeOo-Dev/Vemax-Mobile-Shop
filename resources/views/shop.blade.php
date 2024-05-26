@@ -107,9 +107,11 @@
                             <div
                                 class="product_card d-flex flex-column h-100 bg-white border border-1 rounded p-3 position-relative">
                                 <span class="category_label badge text-bg-light">
-                                    {{ $product->category->title }}
-                                </span>
-
+                                    @isset($product->category->title)
+                                        {{ $product->category->title }}
+                                    @else
+                                        UNCATEGORIZE
+                                    @endisset </span>
                                 <a href="{{ route('detail', $product->slug) }}"
                                     class="text-secondary text-decoration-none w-100 mb-auto">
                                     <img src="{{ asset('storage/' . $product->featured_image) }}" height="150px"
@@ -132,7 +134,8 @@
                                         </button>
                                     </form>
                                 @else
-                                    <a href="{{ route('login') }}" class="w-100 btn btn-outline-primary mt-3">Add to cart</a>
+                                    <a href="{{ route('login') }}" class="w-100 btn btn-outline-primary mt-3">Add to
+                                        cart</a>
                                 @endauth
                             </div>
                         @endforeach

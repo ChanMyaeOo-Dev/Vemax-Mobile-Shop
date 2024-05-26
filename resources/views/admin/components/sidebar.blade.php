@@ -115,9 +115,9 @@
         </div>
     </li>
 
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+    <!-- Nav Item - Trash -->
+    <li class="nav-item {{ request()->routeIs('trash*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('trash') }}">
             <i class="fas fa-trash-alt"></i>
             <span>Trash</span></a>
     </li>

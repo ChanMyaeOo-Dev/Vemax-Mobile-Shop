@@ -2,7 +2,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 document.addEventListener("DOMContentLoaded", function () {
     const deleteForm = document.getElementById("product_delete_form");
-
     deleteForm.addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent the default form submission
 

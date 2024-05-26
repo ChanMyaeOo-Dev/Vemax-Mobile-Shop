@@ -25,6 +25,11 @@ Route::post('/buyNowOrderUpload', [OrderController::class, "buyNowOrderUpload"])
 // Admin Routes
 Route::middleware(["auth"])->prefix("admin")->group(function () {
     Route::resource("products", ProductController::class);
+
+    Route::get('/trash', [ProductController::class, "getTrash"])->name('trash');
+    Route::post('/restore', [ProductController::class, "restore"])->name('restore');
+    Route::delete('/force_delete', [ProductController::class, "forceDelete"])->name('force_delete');
+
     Route::resource("categories", CategoryController::class);
     Route::resource("photos", PhotoController::class);
     Route::resource("orders", OrderController::class);
