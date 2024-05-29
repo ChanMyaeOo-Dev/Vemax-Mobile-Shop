@@ -24,6 +24,7 @@ Route::post('/buyNowOrderUpload', [OrderController::class, "buyNowOrderUpload"])
 
 // Admin Routes
 Route::middleware(["auth"])->prefix("admin")->group(function () {
+    Route::get("/dashboard", [ProductController::class, "dashboard"])->name("dashboard");
     Route::resource("products", ProductController::class);
 
     Route::get('/trash', [ProductController::class, "getTrash"])->name('trash');

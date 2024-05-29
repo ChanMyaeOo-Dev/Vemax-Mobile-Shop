@@ -11,9 +11,35 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 
 class ProductController extends Controller
 {
+    public function dashboard()
+    {
+
+        $top_products = Product::take(5)->get();
+
+        $transactionCount = Product::count();
+        $categoryCount = Category::count();
+
+        $categoryBookCount = Category::withCount('products')->pluck('products_count', 'title');
+
+        $transactionCountsInLastSixMonth = [];
+        for ($i = 0; $i < 6; $i++) {
+            // Get the date for the start of the current month
+            $startDate = Carbon::now()->subMonths($i)->startOfMonth();
+            // Get the date for the end of the current month
+            $endDate = Carbon::now()->subMonths($i)->endOfMonth();
+
+            $transaction = Product::whereBetween('created_at', [$startDate, $endDate])->count();
+            $transactionCountsInLastSixMonth[$startDate->format('M')] = $transaction;
+        }
+
+        return view('admin.dashboard', compact('top_products', 'categoryBookCount', 'transactionCountsInLastSixMonth'));
+        // return view('admin.dashboard');
+    }
     public function index()
     {
         $products = Product::latest()->get();

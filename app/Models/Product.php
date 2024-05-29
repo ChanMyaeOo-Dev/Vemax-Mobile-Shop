@@ -19,4 +19,9 @@ class Product extends Model
     {
         return $this->hasMany(Photo::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(OrderDetail::class)->count();
+    }
 }
