@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PhotoController;
@@ -24,7 +25,7 @@ Route::post('/buyNowOrderUpload', [OrderController::class, "buyNowOrderUpload"])
 
 // Admin Routes
 Route::middleware(["auth"])->prefix("admin")->group(function () {
-    Route::get("/dashboard", [ProductController::class, "dashboard"])->name("dashboard");
+    Route::get("/dashboard", [DashboardController::class, "dashboard"])->name("dashboard");
     Route::resource("products", ProductController::class);
 
     Route::get('/trash', [ProductController::class, "getTrash"])->name('trash');

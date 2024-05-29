@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="width: 700px;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center" href="{{ route('/') }}">

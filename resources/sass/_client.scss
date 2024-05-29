@@ -58,3 +58,21 @@
         border: 1px solid #00000020;
     }
 }
+
+.select2-container .select2-selection--single {
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    border: 1px solid #00000020;
+    padding: 6px !important;
+    color: $dark;
+}
+
+.select2-selection__arrow {
+    margin-top: 7px !important;
+    margin-right: 10px !important;
+}
+
+.select2-search__field:focus-visible {
+    outline: none !important;
+}

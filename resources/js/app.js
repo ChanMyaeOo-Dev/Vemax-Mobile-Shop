@@ -7,6 +7,7 @@ import "animate.css";
 // Page Level Js
 import Chart from "chart.js/auto";
 import Swal from "sweetalert2";
+import "../../node_modules/select2/dist/js/select2.full.min.js";
 
 // Chart Js Codes
 const book_count_chart = document.getElementById("book_count_chart");
@@ -147,7 +148,7 @@ window.showToast = function showToast(message) {
 
 (function ($) {
     "use strict"; // Start of use strict
-
+    $(".my_select").select2();
     // Toggle the side navigation
     $("#sidebarToggle, #sidebarToggleTop").on("click", function (e) {
         $("body").toggleClass("sidebar-toggled");

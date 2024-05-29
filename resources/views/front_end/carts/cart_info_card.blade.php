@@ -116,6 +116,25 @@
                      </div>
                  </div>
 
+                 <div class="mb-3 d-flex flex-column">
+                     <label class="form-label">City</label>
+                     <select
+                         class="w-100 my_select form-control
+                                @error('address')
+                                is-invalid
+                                @enderror"
+                         name="city">
+                         <option value="1">Yangon</option>
+                         <option value="2">Mandalay</option>
+                         <option value="3">Ayeyarwady</option>
+                     </select>
+                     <div class=" invalid-feedback">
+                         @error('address')
+                             {{ $message }}
+                         @enderror"
+                     </div>
+                 </div>
+
                  <div class="mb-3">
                      <label for="address" class="form-label">Address</label>
                      <textarea form="orderUploadForm" name="address"

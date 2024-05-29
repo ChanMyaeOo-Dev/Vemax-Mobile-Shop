@@ -4,10 +4,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-flex align-items-center mb-3">
-            <a href="{{ route('products.index') }}" class="btn btn-sm btn-primary me-2">
-                <i class="fas fa-solid fa-arrow-left"></i>
-            </a>
-            <h1 class="h3 text-gray-800 mb-0">Add Products</h1>
+            <p class="h4 text-dark font-weight-bold mb-0">Add Products</p>
         </div>
         {{-- Form --}}
         <form id="product_upload_form" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
