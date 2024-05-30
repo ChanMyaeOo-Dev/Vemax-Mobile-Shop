@@ -62,6 +62,22 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label for="phone">Phone Number</label>
+
+                                    <div>
+                                        <input id="phone" type="text"
+                                            class="form-control @error('phone') is-invalid @enderror" name="phone"
+                                            value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+
+                                        @error('phone')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
                                     <label for="password">{{ __('Password') }}</label>
 
                                     <div>

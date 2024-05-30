@@ -20,8 +20,13 @@ class Product extends Model
         return $this->hasMany(Photo::class);
     }
 
-    public function orders()
+    public function orderCount()
     {
         return $this->hasMany(OrderDetail::class)->count();
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
     }
 }
